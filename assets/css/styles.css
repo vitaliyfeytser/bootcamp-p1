@@ -1,0 +1,112 @@
+body {
+    background-color:rgb(241,195,148);
+    /*
+    --SAME COLOR IN DIFFERENT NOTATION --
+    #f1c394
+    #fc9
+    burlywood
+    hsl(30,76,76)
+    rgb(241,195,148)
+    */
+}
+
+.wide-author-container {
+    position: absolute;
+    width: 100%;
+    top: 12vw;
+    padding-left: 15vw;
+    padding-right: 15vw;
+}
+.search-row {
+    margin-top: 2em;
+
+}
+
+
+.author-img {
+    height: 18vw;
+
+    box-shadow: 
+    -.05em -.05em 2.5em white,
+    .05em -.05em 2.5em white,
+    -.05em .05em 2.5em white,
+    .05em .05em 2.5em white,
+    -.075em 0 2.5em white,
+    .075em 0 2.5em white,
+    0 -.075em 2.5em white,
+    0 .075em 2.5em white;
+}
+
+#today-top {
+    color: black;
+    text-shadow: 
+    -.05em -.05em 2.5em white,
+    .05em -.05em 2.5em white,
+    -.05em .05em 2.5em white,
+    .05em .05em 2.5em white,
+    -.075em 0 2.5em white,
+    .075em 0 2.5em white,
+    0 -.075em 2.5em white,
+    0 .075em 2.5em white;
+}
+
+.author-name {
+    color: white;
+    text-shadow: 
+    -.05em -.05em 2.5em black,
+    .05em -.05em 2.5em black,
+    -.05em .05em 2.5em black,
+    .05em .05em 2.5em black,
+    -.075em 0 2.5em black,
+    .075em 0 2.5em black,
+    0 -.075em 2.5em black,
+    0 .075em 2.5em black;
+}
+
+
+.author-bio {
+
+    text-shadow: 
+    -.05em -.05em 1.5em white,
+    .05em -.05em 1.5em white,
+    -.05em .05em 1.5em white,
+    .05em .05em 1.5em white,
+    -.075em 0 1.5em white,
+    .075em 0 1.5em white,
+    0 -.075em 1.5em white,
+    0 .075em 1.5em white,
+
+    -.05em -.05em 3.5em white,
+    .05em -.05em 3.5em white,
+    -.05em .05em 3.5em white,
+    .05em .05em 3.5em white,
+    -.075em 0 3.5em white,
+    .075em 0 3.5em white,
+    0 -.075em 3.5em white,
+    0 .075em 3.5em white;
+}
+
+.book {
+    margin-top: 1em;
+}
+
+.book-image {
+    height: 18vw;
+}
+
+#complete-works-title {
+    margin: 1em 0em;
+    font-weight: bold;
+}
+
+.table-book-image {
+    height: 5vw;
+}
+
+.last-column {
+    align-content: flex-end;
+}
+
+.table-rating-image {
+    width: 5em;
+}
