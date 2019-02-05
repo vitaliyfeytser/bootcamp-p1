@@ -1,0 +1,120 @@
+body {
+    background-color:rgb(241,195,148);
+    /*
+    --SAME COLOR IN DIFFERENT NOTATIONS --
+    #f1c394
+    #fc9
+    burlywood
+    hsl(30,76,76)
+    rgb(241,195,148)
+    */
+}
+
+.carousel-inner {
+    box-shadow: 0 0 .5em 0 black;
+    transition: 0.3s;
+}
+
+.wide-author-container {
+    position: absolute;
+    width: 100%;
+    top: 12vw;
+    padding-left: 15vw;
+    padding-right: 15vw;
+}
+
+
+
+.author-img {
+    height: 18vw;
+
+    box-shadow: 
+    -.05em -.05em 2.5em rgb(27, 27, 27),
+    -.05em .05em 2.5em rgb(27, 27, 27),
+    -.075em 0 2.5em rgb(27, 27, 27),
+    0 -.075em 2.5em rgb(27, 27, 27);
+}
+
+#today-top {
+    color: black;
+    text-shadow: 
+    -.05em -.05em 2.5em white,
+    .05em -.05em 2.5em white,
+    -.05em .05em 2.5em white,
+    .05em .05em 2.5em white,
+    -.075em 0 2.5em white,
+    .075em 0 2.5em white,
+    0 -.075em 2.5em white,
+    0 .075em 2.5em white;
+}
+
+.author-name {
+    color: white;
+    text-shadow: 
+    -.05em -.05em 2.5em rgb(27, 27, 27),
+    .05em -.05em 2.5em rgb(27, 27, 27),
+    -.05em .05em 2.5em rgb(27, 27, 27),
+    .05em .05em 2.5em rgb(27, 27, 27),
+    -.075em 0 2.5em rgb(27, 27, 27),
+    .075em 0 2.5em rgb(27, 27, 27),
+    0 -.075em 2.5em rgb(27, 27, 27),
+    0 .075em 2.5em rgb(27, 27, 27);
+}
+
+
+.author-bio {
+    color: white;
+    text-shadow: 
+    -.05em -.05em 1.5em rgb(27, 27, 27),
+    .05em -.05em 1.5em rgb(27, 27, 27),
+    -.05em .05em 1.5em rgb(27, 27, 27),
+    .05em .05em 1.5em rgb(27, 27, 27),
+    -.075em 0 1.5em rgb(27, 27, 27),
+    .075em 0 1.5em rgb(27, 27, 27),
+    0 -.075em 1.5em rgb(27, 27, 27),
+    0 .075em 1.5em rgb(27, 27, 27);
+
+}
+
+
+/* SEARCH RESULT & AUTHOR'S MOST POPULAR BOOKS */
+
+#popular-title {
+    margin: 1em 0em;
+    font-weight: bold;
+}
+
+.book-image {
+    height: 18vw;
+    /* Add shadows to create a 3D effect */
+    box-shadow: 0 .1em .25em 0 black;
+    transition: 0.3s;
+}
+
+  /* On mouse-over, add a deeper shadow */
+.book-image:hover {
+    box-shadow: 0 .5em 1.5em 0 black;
+}
+.book-title {
+    margin-top: .5em;
+}
+
+
+/* COMPLETE WORKS TABLE */
+
+#complete-works-title {
+    margin: 1em 0em;
+    font-weight: bold;
+}
+
+.table-book-image {
+    height: 5vw;
+}
+
+.last-column {
+    align-content: flex-end;
+}
+
+.table-rating-image {
+    width: 5em;
+}
