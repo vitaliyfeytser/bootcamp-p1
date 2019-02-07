@@ -120,3 +120,11 @@ body {
 .table-rating-image {
     width: 5em;
 }
+
+#eBook-image {
+    height: 15px;
+    width: 15px;
+    margin-left: 3px;
+    /* opacity: 0.5;
+    filter: alpha(opacity=50); */
+}

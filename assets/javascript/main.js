@@ -27,6 +27,7 @@ var database = firebase.database();
 // - get user input from search field and put it into variables
 // - console.log variables to make sure they recieve search values
 
+var bookURL = "";
 var searchByAuthor = '';
 var searchByBook = '';
 
@@ -76,19 +77,27 @@ $("#search-button").on("click", function(event) {
 
     // Replace 'Author's most popular works' info
     for (i = 0; i < searchedAuthor.bibliography.length; i++) {
+      console.log("Book URL: " + bookURL); 
 
+      // var theLink = "bookURL" + i;
       // MY ATTEMPT TO CREATE NESTED DIVS
       $('<div>',{class : 'col-3 book'}).append(
           $('<div>',{class : 'container'}).append(
               $('<div>',{class : 'row'}).append(
                   $('<img>',{class : 'book-image',
-                              src : searchedAuthor.bibliography[i].coverLink}).append(
+                              src : bookURL[i].volumeInfo.imageLinks.thumbnail}).append(
                   )
         ) ),
         $('<div>',{class : 'row book-title'}).append(
-            $('<h5>').text(searchedAuthor.bibliography[i].bookName)
+          $('<h5>').text(bookURL[i].volumeInfo.title).append(
+            $('<a>').attr("href", bookURL[i].saleInfo.buyLink).append(
+              $('<img>', {id : 'eBook-image',
+                          src : "./assets/images/eBook3.png"}).attr("href", bookURL[i].saleInfo.buyLink)
+            )
+            // $('<a>').text(bookURL[i].volumeInfo.title).attr("href", bookURL[i].saleInfo.buyLink)   
+          )         
         )
-      ).appendTo('#popular-book-container');   
+      ).appendTo('#popular-book-container');  
       };
   });
 
@@ -193,6 +202,34 @@ var authors = [{
   }
 ]}];
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//Tyler's code here... for dynamic images
+$.ajaxPrefilter(function (options) {
+  if (options.crossDomain && jQuery.support.cors) {
+      var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+      options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+ //options.url = "http://cors.corsproxy.io/url=" + options.url;
+}
+});
+var authorSearch = "Tolkien";
+var titleSearch = "Return of the King"; //not yet implemented
+var searchURL = "https://www.googleapis.com/books/v1/volumes?q=steel+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
+
+$.ajax({
+url: searchURL,
+method: "GET"
+}).then(function(response) {
+  console.log(response);
+      bookURL = response.items;
+  // bookURL1 = response.items[0].saleInfo.buyLink;
+  // bookURL2 = response.items[1].saleInfo.buyLink;
+  // bookURL3 = response.items[2].saleInfo.buyLink;
+  // bookURL4 = response.items[3].saleInfo.buyLink;
+  // console.log("This is the book URL: " + bookURL1);
+  // $("#theLink").attr("href", bookURL1);
+  console.log(bookURL[2]);
+});
 console.log('authors: ', authors);
 
 // use jQuery to populate 'Today's Top Author' from an object
