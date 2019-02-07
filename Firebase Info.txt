@@ -1,0 +1,20 @@
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
+
+<script>
+ // Initialize Firebase
+ var config = {
+   apiKey: "AIzaSyDR520PVWe0l8PyVbC95S7FBsIaYF0eh1w",
+   authDomain: "the-ukraine-train-project.firebaseapp.com",
+   databaseURL: "https://the-ukraine-train-project.firebaseio.com",
+   projectId: "the-ukraine-train-project",
+   storageBucket: "",
+   messagingSenderId: "616421465352"
+ };
+ 
+ firebase.initializeApp(config);
+</script>
+
+Our firebase google account:
+davis.ukraine.train@gmail.com
+
+pwd: vitaliyisthemuzhik
