@@ -43,10 +43,11 @@
                   </div>
                 </li>
               </ul>
+              <!-- SEARCH FIELDS -->
               <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search by Author" aria-label="Search">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search by Book" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <input id="search-by-author" class="form-control mr-sm-2" type="search" placeholder="Search by Author" aria-label="Search">
+                <input id="search-by-book" class="form-control mr-sm-2" type="search" placeholder="Search by Book" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="search-button">Search</button>
               </form>
             </div>
           </nav>
@@ -90,23 +91,24 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-3">
-                                <img src="assets/images/author-brandon-sanderson.jpg" class="rounded float-right author-img" alt="...">
+                                <img id="author-image" src="assets/images/author-brandon-sanderson.jpg" class="rounded float-right author-img" alt="...">
                             </div>
                             <div class="col-9 author-box">
                                 <div class="container">
-                                    <div class="row" id="today-top">
-                                        <h3>TODAY'S TOP AUTHOR</h3>
+                                    <div class="row">
+                                        <h3 id="today-top">TODAY'S TOP AUTHOR</h3>
                                     </div>
-                                    <div class="row author-name">
-                                        <h1>Brandon Sanderson</h1>
+                                    <div class="row">
+                                        <h1 id="author-name">Brandon Sanderson</h1>
                                     </div>
-                                    <br>
+
+                                    <div class="row">
+                                        <p class="author-bio" id="bio-caption">Brandon Sanderson (born December 19, 1975) is an American fantasy and science fiction writer. He is best known for the Cosmere universe, in which most of his fantasy novels (most notably the Mistborn series and The Stormlight Archive) are set. He is also known for finishing Robert Jordan's epic fantasy series The Wheel of Time.
+                                        </p>
+                                    </div>
+
                                     <div class="row author-bio">
-                                    Brandon Sanderson (born December 19, 1975) is an American fantasy and science fiction writer. He is best known for the Cosmere universe, in which most of his fantasy novels (most notably the Mistborn series and The Stormlight Archive) are set. He is also known for finishing Robert Jordan's epic fantasy series The Wheel of Time.
-                                    </div>
-                                    <br>
-                                    <div class="row author-bio">
-                                    (Search-by-author will populate the image and text areas here.)
+                                        (Search-by-author will populate the image and text areas here.)
                                     </div>
                                 </div>
                             </div>
@@ -140,9 +142,9 @@
     <div class="container popular-books">
         <div id="popular-title">Author's Most Popular Books:</div>
 
-        <div class="row">
+        <div class="row" id="popular-book-container">
 
-            <div class="col-3 book">
+            <!-- <div class="col-3 book">
                 <div class="container">
                     <div class="row">
                         <img class="book-image" src="assets/images/Way.jpg">
@@ -179,38 +181,6 @@
                 <div class="container">
                     <div class="row">
                         <img class="book-image" src="assets/images/Way.jpg">
-                    </div>
-                    <div class="row book-title">
-                        <h5>What if the title of the book is really really long?</h5>
-                    </div>
-                </div>
-            </div>
-<!-- 
-            <div class="col-3 book">
-                <div class="container">
-                    <div class="row">
-                        <img class="book-image" src="assets/images/Way.jpg">
-                    </div>
-                    <div class="row book-title">
-                        <h5>The Way of Kings</h5>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-3 book">
-                <div class="container">
-                    <div class="row">
-                        <img class="book-image" src="assets/images/Words.jpg">
-                    </div>
-                    <div class="row book-title">
-                        <h5>Words of Radiance</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3 book">
-                <div class="container">
-                    <div class="row">
-                        <img class="book-image" src="assets/images/Words.jpg">
                     </div>
                     <div class="row book-title">
                         <h5>What if the title of the book is really really long?</h5>
@@ -266,9 +236,11 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-        
+    
+    <!-- Link to Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
     <!-- Link to custom Javascript -->
-    <script src="/assets/javascript/main.js"></script>
+    <script src="./assets/javascript/main.js"></script>
 
 
 
