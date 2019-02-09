@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<!-- Firebase App is always required and must be first -->
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-app.js"></script>
+<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css">
+<!-- Add additional services that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-database.js"></script>
+  <style>
+  .container {
+    color:white !important;
+    text-align: center;
+    font-size: 30px;
+  }
+
+  body {
+    background-image: url("./assets/images/cover-cosmere.jpg");
+    width: 100%;
+    height: 100%;
+  } 
+
+
+  
+  </style>
+</head>
+<body>
+
+<div class="container" id="login"> 
+  <!-- Trigger the modal with a button -->
+  <!-- <button type="button" class="btn btn-default btn-lg" id="myBtn">We've been expecting you</button> -->
+  <div id="firebaseui-auth-container"></div>
+  
+</div>
+
+<script src="./assets/javascript/sing-in.js"></script>
+</body>
+</html>
