@@ -1,14 +1,14 @@
 // CONNECT TO FIREBASE
 
 var config = {
-    apiKey: "AIzaSyDR520PVWe0l8PyVbC95S7FBsIaYF0eh1w",
-    authDomain: "the-ukraine-train-project.firebaseapp.com",
-    databaseURL: "https://the-ukraine-train-project.firebaseio.com",
-    projectId: "the-ukraine-train-project",
-    storageBucket: "the-ukraine-train-project.appspot.com",
-    messagingSenderId: "616421465352"
-  };
-  firebase.initializeApp(config);
+  apiKey: "AIzaSyDR520PVWe0l8PyVbC95S7FBsIaYF0eh1w",
+  authDomain: "the-ukraine-train-project.firebaseapp.com",
+  databaseURL: "https://the-ukraine-train-project.firebaseio.com",
+  projectId: "the-ukraine-train-project",
+  storageBucket: "the-ukraine-train-project.appspot.com",
+  messagingSenderId: "616421465352"
+};
+firebase.initializeApp(config);
 
 var database = firebase.database();
 
@@ -31,109 +31,119 @@ var bookURL = '';
 var searchByAuthor = '';
 var searchByBook = '';
 
+// Replace 'Author's most popular works' info
+
+function populateBooks() {
+  // Empty popular book div before displaying new info
+  $('#popular-book-container').empty();
+  // for (i = 0; i < searchedAuthor.bibliography.length; i++) {
+  for (i = 0; i < bookURL.length; i++) {
+    // console.log("Book URL: " + bookURL); 
+
+    // var theLink = "bookURL" + i;
+    // MY ATTEMPT TO CREATE NESTED DIVS
+    $('<div>', { class: 'col-3 book' }).append(
+      $('<div>', { class: 'container' }).append(
+        $('<div>', { class: 'row' }).append(
+          $('<img>', {
+            class: 'book-image',
+            src: bookURL[i].volumeInfo.imageLinks.thumbnail
+          }).append(
+          )
+        )),
+      $('<div>', { class: 'row book-title' }).append(
+        $('<h5>').text(bookURL[i].volumeInfo.title).append(
+          $('<a>').attr("href", bookURL[i].saleInfo.buyLink).append(
+            $('<img>', {
+              id: 'eBook-image',
+              src: "./assets/images/eBook3.png"
+            }).attr("href", bookURL[i].saleInfo.buyLink)
+          )
+          // $('<a>').text(bookURL[i].volumeInfo.title).attr("href", bookURL[i].saleInfo.buyLink)   
+        )
+      )
+    ).appendTo('#popular-book-container');
+  };
+}
+
 // On-click event listener for the 'Search' button
-$("#search-button").on("click", function(event) {
-    event.preventDefault();
-  
-    // Grabs user input
-    searchByAuthor = $("#search-by-author").val().toLowerCase();
-    searchByBook = $("#search-by-book").val().toLowerCase();
-    
-    console.log('searchByAuthor: ', searchByAuthor);
-    console.log('searchByBook: ', searchByBook);
+$("#search-button").on("click", function (event) {
+  event.preventDefault();
 
-    // Declare a variable for searched author that awaits an object
-    var searchedAuthor = {};
-    var searchedBook = {};
+  // Grabs user input
+  searchByAuthor = $("#search-by-author").val().toLowerCase();
+  searchByBook = $("#search-by-book").val().toLowerCase();
 
-    // Loop through authors to find a search match
-    for (i = 0; i < authors.length; i++) {
+  console.log('searchByAuthor: ', searchByAuthor);
+  console.log('searchByBook: ', searchByBook);
 
-      console.log('authors[i].firstName.toLowerCase(): ', authors[i].firstName.toLowerCase());
-      console.log('authors[i].lastName.toLowerCase(): ', authors[i].lastName.toLowerCase());
-      console.log("authors[i].firstName.toLowerCase() + ' ' + authors[i].lastName.toLowerCase(): ", authors[i].firstName.toLowerCase() + ' ' + authors[i].lastName.toLowerCase());
+  // Declare a variable for searched author that awaits an object
+  var searchedAuthor = searchByAuthor;
+  var searchedBook = {};
 
-      if (searchByAuthor == authors[i].firstName.toLowerCase()  
-       || searchByAuthor == authors[i].lastName.toLowerCase()
-       || searchByAuthor == authors[i].firstName.toLowerCase() + ' ' + authors[i].lastName.toLowerCase()) {
-        console.log('It matches');
-        
-        // set searchedAuthor variable to an object of the search match
-        searchedAuthor = authors[i];
-        console.log('searchedAuthor: ', searchedAuthor);
-        
-       } else {
-         console.log("Sorry, there's no match.");
-       }
-       
-    };
+  // // Loop through authors to find a search match
+  // for (i = 0; i < authors.length; i++) {
 
-    // Replace info in 'Today's Top Author' div with 'You searched for:' info
-    $('#author-image').attr('src', searchedAuthor.image);
-    $('#today-top').text('YOU SEARCHED FOR:');
-    $('#author-name').text(searchedAuthor.firstName + ' ' + searchedAuthor.lastName);
-    $('#bio-caption').text(searchedAuthor.caption);
+  //   console.log('authors[i].firstName.toLowerCase(): ', authors[i].firstName.toLowerCase());
+  //   console.log('authors[i].lastName.toLowerCase(): ', authors[i].lastName.toLowerCase());
+  //   console.log("authors[i].firstName.toLowerCase() + ' ' + authors[i].lastName.toLowerCase(): ", authors[i].firstName.toLowerCase() + ' ' + authors[i].lastName.toLowerCase());
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    //Tyler's code here... for dynamic images
-    $.ajaxPrefilter(function (options) {
-      if (options.crossDomain && jQuery.support.cors) {
-          var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
-          options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
-    //options.url = "http://cors.corsproxy.io/url=" + options.url;
+  //   if (searchByAuthor == authors[i].firstName.toLowerCase()  
+  //    || searchByAuthor == authors[i].lastName.toLowerCase()
+  //    || searchByAuthor == authors[i].firstName.toLowerCase() + ' ' + authors[i].lastName.toLowerCase()) {
+  //     console.log('It matches');
+
+  //     // set searchedAuthor variable to an object of the search match
+  //     searchedAuthor = authors[i];
+  //     console.log('searchedAuthor: ', searchedAuthor);
+
+  //    } else {
+  //      console.log("Sorry, there's no match.");
+  //    }
+
+  // };
+
+  // Replace info in 'Today's Top Author' div with 'You searched for:' info
+  $('#author-image').attr('src', searchedAuthor.image);
+  $('#today-top').text('YOU SEARCHED FOR:');
+  $('#author-name').text(searchedAuthor.firstName + ' ' + searchedAuthor.lastName);
+  $('#bio-caption').text(searchedAuthor.caption);
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  //Tyler's code here... for dynamic images
+  $.ajaxPrefilter(function (options) {
+    if (options.crossDomain && jQuery.support.cors) {
+      var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+      options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+      //options.url = "http://cors.corsproxy.io/url=" + options.url;
     }
-    });
-    console.log('searchedAuthor: ', searchedAuthor);
-    var authorSearch = searchByAuthor;
-    // var titleSearch = "Return of the King"; //not yet implemented
-    var searchURL = "https://www.googleapis.com/books/v1/volumes?q=steel+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
+  });
+  console.log('searchedAuthor: ', searchedAuthor);
+  var authorSearch = searchByAuthor;
+  // var titleSearch = "Return of the King"; //not yet implemented
+  var searchURL = "https://www.googleapis.com/books/v1/volumes?q=steel+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
 
-    $.ajax({
+  $.ajax({
     url: searchURL,
     method: "GET"
-    }).then(function(response) {
-      console.log(response);
-          bookURL = response.items;
-      // bookURL1 = response.items[0].saleInfo.buyLink;
-      // bookURL2 = response.items[1].saleInfo.buyLink;
-      // bookURL3 = response.items[2].saleInfo.buyLink;
-      // bookURL4 = response.items[3].saleInfo.buyLink;
-      // console.log("This is the book URL: " + bookURL1);
-      // $("#theLink").attr("href", bookURL1);
-      console.log('bookURL: ', bookURL);
-    });
-    console.log('authors: ', authors);
-
-    /////////////////////////////////////////////////////////////////////////////////////////////
-
-    // Replace 'Author's most popular works' info
-    // Empty popular book div before displaying new info
-    $('#popular-book-container').empty();
-    // for (i = 0; i < searchedAuthor.bibliography.length; i++) {
-    for (i = 0; i < bookURL.length; i++) {
-      // console.log("Book URL: " + bookURL); 
-
-      // var theLink = "bookURL" + i;
-      // MY ATTEMPT TO CREATE NESTED DIVS
-      $('<div>',{class : 'col-3 book'}).append(
-          $('<div>',{class : 'container'}).append(
-              $('<div>',{class : 'row'}).append(
-                  $('<img>',{class : 'book-image',
-                              src : bookURL[i].volumeInfo.imageLinks.thumbnail}).append(
-                  )
-        ) ),
-        $('<div>',{class : 'row book-title'}).append(
-          $('<h5>').text(bookURL[i].volumeInfo.title).append(
-            $('<a>').attr("href", bookURL[i].saleInfo.buyLink).append(
-              $('<img>', {id : 'eBook-image',
-                          src : "./assets/images/eBook3.png"}).attr("href", bookURL[i].saleInfo.buyLink)
-            )
-            // $('<a>').text(bookURL[i].volumeInfo.title).attr("href", bookURL[i].saleInfo.buyLink)   
-          )         
-        )
-      ).appendTo('#popular-book-container');  
-      };
+  }).then(function (response) {
+    console.log(response);
+    bookURL = response.items;
+    populateBooks();
+    // bookURL1 = response.items[0].saleInfo.buyLink;
+    // bookURL2 = response.items[1].saleInfo.buyLink;
+    // bookURL3 = response.items[2].saleInfo.buyLink;
+    // bookURL4 = response.items[3].saleInfo.buyLink;
+    // console.log("This is the book URL: " + bookURL1);
+    // $("#theLink").attr("href", bookURL1);
+    console.log('bookURL: ', bookURL);
   });
+  console.log('authors: ', authors);
+
+  /////////////////////////////////////////////////////////////////////////////////////////////
+
+
+});
 
 // create an authors array of Brandon Sanderson
 // create a limited complete works object of Brandon Sanderson's works - simulate populating divs from here
@@ -190,51 +200,52 @@ var authors = [{
     coverLink: "https://upload.wikimedia.org/wikipedia/en/6/6d/Demons_%28Fyodor_Dostoyevsky%29.jpg",
     sellerLink: "https://smile.amazon.com/Demons-Penguin-Classics-Fyodor-Dostoevsky/dp/0141441410/ref=sr_1_4?s=books&ie=UTF8&qid=1549427616&sr=1-4&keywords=demons+dostoyevsky"
   }
-  },
+},
 
-  {
+{
   firstName: "Brandon",
   lastName: "Sanderson",
   image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg/440px-Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg",
   caption: "Brandon Sanderson (born December 19, 1975) is an American fantasy and science fiction writer. He is best known for the Cosmere universe, in which most of his fantasy novels (most notably the Mistborn series and The Stormlight Archive) are set. He is also known for finishing Robert Jordan's epic fantasy series The Wheel of Time.",
-  bibliography:[
-  {
-    type: "Book",
-    bookName: "The Way of Kings",
-    coverLink: "https://upload.wikimedia.org/wikipedia/en/8/8b/TheWayOfKings.png",
-    sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
-  },
-  {
-    type: "Book",
-    bookName: "Words of Radiance",
-    coverLink: "https://upload.wikimedia.org/wikipedia/en/e/e0/WordsOfRadianceCover.png",
-    sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
-  },
-  {
-    type: "Book",
-    bookName: "Oathbringer",
-    coverLink: "https://upload.wikimedia.org/wikipedia/en/5/5d/Brandon_Sanderson_Oathbringer_book_cover.jpg",
-    sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
-  },
-  {
-    type: "Book",
-    bookName: "Mistborn: The Final Empire",
-    coverLink: "https://upload.wikimedia.org/wikipedia/en/4/44/Mistborn-cover.jpg",
-    sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
-  },
-  {
-    type: "Book",
-    bookName: "Mistborn: The Well of Ascension",
-    coverLink: "https://upload.wikimedia.org/wikipedia/en/7/7b/Mistborn-_The_Well_of_Ascension_by_Brandon_Sanderson.jpg",
-    sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
-  },
-  {
-    type: "Book",
-    bookName: "Mistborn: The Hero of Ages",
-    coverLink: "https://upload.wikimedia.org/wikipedia/en/b/bb/The_Hero_of_Ages_-_Book_Three_of_Mistborn.png",
-    sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
-  }
-]}];
+  bibliography: [
+    {
+      type: "Book",
+      bookName: "The Way of Kings",
+      coverLink: "https://upload.wikimedia.org/wikipedia/en/8/8b/TheWayOfKings.png",
+      sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
+    },
+    {
+      type: "Book",
+      bookName: "Words of Radiance",
+      coverLink: "https://upload.wikimedia.org/wikipedia/en/e/e0/WordsOfRadianceCover.png",
+      sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
+    },
+    {
+      type: "Book",
+      bookName: "Oathbringer",
+      coverLink: "https://upload.wikimedia.org/wikipedia/en/5/5d/Brandon_Sanderson_Oathbringer_book_cover.jpg",
+      sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
+    },
+    {
+      type: "Book",
+      bookName: "Mistborn: The Final Empire",
+      coverLink: "https://upload.wikimedia.org/wikipedia/en/4/44/Mistborn-cover.jpg",
+      sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
+    },
+    {
+      type: "Book",
+      bookName: "Mistborn: The Well of Ascension",
+      coverLink: "https://upload.wikimedia.org/wikipedia/en/7/7b/Mistborn-_The_Well_of_Ascension_by_Brandon_Sanderson.jpg",
+      sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
+    },
+    {
+      type: "Book",
+      bookName: "Mistborn: The Hero of Ages",
+      coverLink: "https://upload.wikimedia.org/wikipedia/en/b/bb/The_Hero_of_Ages_-_Book_Three_of_Mistborn.png",
+      sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
+    }
+  ]
+}];
 
 
 //Kristal's API for Wiki media for the image and boi. 
