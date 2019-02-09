@@ -37,7 +37,7 @@ function populateBooks() {
   // Empty popular book div before displaying new info
   $('#popular-book-container').empty();
   // for (i = 0; i < searchedAuthor.bibliography.length; i++) {
-  for (i = 0; i < bookURL.length; i++) {
+  for (i = 0; i < 4; i++) {
     // console.log("Book URL: " + bookURL); 
 
     // var theLink = "bookURL" + i;
@@ -120,8 +120,8 @@ $("#search-button").on("click", function (event) {
   });
   console.log('searchedAuthor: ', searchedAuthor);
   var authorSearch = searchByAuthor;
-  // var titleSearch = "Return of the King"; //not yet implemented
-  var searchURL = "https://www.googleapis.com/books/v1/volumes?q=steel+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
+  var titleSearch = searchByBook
+  var searchURL = "https://www.googleapis.com/books/v1/volumes?q=" + searchByBook + "+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
 
   $.ajax({
     url: searchURL,
