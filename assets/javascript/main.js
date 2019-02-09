@@ -237,7 +237,74 @@ var authors = [{
 ]}];
 
 
+//Kristal's API for Wiki media for the image and boi. 
+// Function calling the API Author Search
+function getAuthorInfo(authorSearch){
+  $.ajax({
+    url: "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=" + authorSearch,
+    method: "GET",
+  }).then(function(response) {
+      console.log(response, "query")
 
+      console.log(response.query.search[0].snippet);
+
+      var target = response.query.search[0];
+
+      console.log("https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=images", "url");
+
+      $.ajax({
+        url: "https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=images&format=json",
+        method: "GET"
+      }).then(function(response) {
+        console.log(response, "images");
+
+        var image = response.parse.images[0];
+
+        console.log("https://en.wikipedia.org/w/api.php?action=query&titles=Image:" + encodeURIComponent(image) + "&prop=imageinfo&iiprop=url");
+
+        $.ajax({
+          url: "https://en.wikipedia.org/w/api.php?action=query&titles=Image:" + encodeURIComponent(image) + "&prop=imageinfo&iiprop=url&format=json",
+          method: "GET"
+        }).then(function(response){
+          console.log(response, "imageURL");
+
+          console.log(response.query.pages[Object.keys(response.query.pages)[0]].imageinfo[0].url);
+
+          $("#author-image").attr('src', response.query.pages[Object.keys(response.query.pages)[0]].imageinfo[0].url);
+        })
+      })
+
+      //Calling the first pargraph of the bio
+    $.ajax({
+      url:"https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=text&format=json",           
+      method:"GET"
+    }).then(function(response){
+      console.log(response, "wikitext");
+
+      $("#author-name").text(response.parse.title);
+
+      $text = $(response.parse.text['*']);
+
+      console.log($text);
+
+      //$text.removeAll(".mw-empty-elt");
+      
+      console.log($text.find("p")[1]);
+
+      var bio = $($text.find("p")[1]);
+
+      console.log(bio);
+
+      bio = bio.text().replace(/]+>/gi, '');
+
+      $("#bio-caption").html(bio);
+    
+    })
+
+  })
+}
+
+getAuthorInfo("Conan Doyle");
 
 // use jQuery to populate 'Today's Top Author' from an object
 
