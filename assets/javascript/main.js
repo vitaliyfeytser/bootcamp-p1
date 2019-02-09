@@ -27,7 +27,7 @@ var database = firebase.database();
 // - get user input from search field and put it into variables
 // - console.log variables to make sure they recieve search values
 
-var bookURL = "";
+var bookURL = '';
 var searchByAuthor = '';
 var searchByBook = '';
 
@@ -44,7 +44,8 @@ $("#search-button").on("click", function(event) {
 
     // Declare a variable for searched author that awaits an object
     var searchedAuthor = {};
-    
+    var searchedBook = {};
+
     // Loop through authors to find a search match
     for (i = 0; i < authors.length; i++) {
 
@@ -73,11 +74,44 @@ $("#search-button").on("click", function(event) {
     $('#author-name').text(searchedAuthor.firstName + ' ' + searchedAuthor.lastName);
     $('#bio-caption').text(searchedAuthor.caption);
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tyler's code here... for dynamic images
+    $.ajaxPrefilter(function (options) {
+      if (options.crossDomain && jQuery.support.cors) {
+          var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+          options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+    //options.url = "http://cors.corsproxy.io/url=" + options.url;
+    }
+    });
+    console.log('searchedAuthor: ', searchedAuthor);
+    var authorSearch = searchByAuthor;
+    // var titleSearch = "Return of the King"; //not yet implemented
+    var searchURL = "https://www.googleapis.com/books/v1/volumes?q=steel+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
 
+    $.ajax({
+    url: searchURL,
+    method: "GET"
+    }).then(function(response) {
+      console.log(response);
+          bookURL = response.items;
+      // bookURL1 = response.items[0].saleInfo.buyLink;
+      // bookURL2 = response.items[1].saleInfo.buyLink;
+      // bookURL3 = response.items[2].saleInfo.buyLink;
+      // bookURL4 = response.items[3].saleInfo.buyLink;
+      // console.log("This is the book URL: " + bookURL1);
+      // $("#theLink").attr("href", bookURL1);
+      console.log('bookURL: ', bookURL);
+    });
+    console.log('authors: ', authors);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
 
     // Replace 'Author's most popular works' info
-    for (i = 0; i < searchedAuthor.bibliography.length; i++) {
-      console.log("Book URL: " + bookURL); 
+    // Empty popular book div before displaying new info
+    $('#popular-book-container').empty();
+    // for (i = 0; i < searchedAuthor.bibliography.length; i++) {
+    for (i = 0; i < bookURL.length; i++) {
+      // console.log("Book URL: " + bookURL); 
 
       // var theLink = "bookURL" + i;
       // MY ATTEMPT TO CREATE NESTED DIVS
@@ -203,34 +237,7 @@ var authors = [{
 ]}];
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//Tyler's code here... for dynamic images
-$.ajaxPrefilter(function (options) {
-  if (options.crossDomain && jQuery.support.cors) {
-      var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
-      options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
- //options.url = "http://cors.corsproxy.io/url=" + options.url;
-}
-});
-var authorSearch = "Tolkien";
-var titleSearch = "Return of the King"; //not yet implemented
-var searchURL = "https://www.googleapis.com/books/v1/volumes?q=steel+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
 
-$.ajax({
-url: searchURL,
-method: "GET"
-}).then(function(response) {
-  console.log(response);
-      bookURL = response.items;
-  // bookURL1 = response.items[0].saleInfo.buyLink;
-  // bookURL2 = response.items[1].saleInfo.buyLink;
-  // bookURL3 = response.items[2].saleInfo.buyLink;
-  // bookURL4 = response.items[3].saleInfo.buyLink;
-  // console.log("This is the book URL: " + bookURL1);
-  // $("#theLink").attr("href", bookURL1);
-  console.log(bookURL[2]);
-});
-console.log('authors: ', authors);
 
 // use jQuery to populate 'Today's Top Author' from an object
 
