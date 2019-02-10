@@ -31,7 +31,75 @@ var bookURL = '';
 var searchByAuthor = '';
 var searchByBook = '';
 
-// Replace 'Author's most popular works' info
+////////////////////////////////Tyler's Code/////////////////////////////////////////////////////////////////
+//We can code the default recommended books here: //////////////////////////////////////////////
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  //Tyler's code here... for dynamic images
+
+  var authorSpotlightList = ["J.R.R. Tolkien", "Brandon Sanderson", "Arthur Conan Doyle", "J.K. Rowling"]
+  var authorSpotlight = authorSpotlightList[Math.floor(Math.random()*4)];
+  console.log(authorSpotlight);
+
+  $.ajaxPrefilter(function (options) {
+    if (options.crossDomain && jQuery.support.cors) {
+      var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+      options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+      //options.url = "http://cors.corsproxy.io/url=" + options.url;
+    }
+  });
+  var searchURL = "https://www.googleapis.com/books/v1/volumes?q=+inauthor:" + authorSpotlight + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
+
+  $.ajax({
+    url: searchURL,
+    method: "GET"
+  }).then(function (response) {
+    console.log(response);
+    $("#popular-title").text("Author Spotlight: " + authorSpotlight);
+    bookURL = response.items;
+    populateBooks();
+    console.log('bookURL: ', bookURL);
+  });
+  console.log('authors: ', authors);
+
+  /////////////////////////////////////////////////////////////////////////////////////////////
+
+// var defaultRecommendedTitles = ["Fellowship of the Ring", "Insert"];
+// var defaultRecommendedPics = ["a","b","c","d"];  //put 4 pictures in this array src: "./assets/images/eBook3.png"
+// defaultRecommendedPics[0].src = ".assets/images/Fellowship.jpg"
+// var defaultRecommendedLinks = ["a","b","c","d"]; //put 4 links in this array
+// defaultRecommendedLinks[0] = "https://books.google.com/books?id=aWZzLPhY4o0C&printsec=frontcover&dq=fellowship+of+the+ring&hl=en&sa=X&ved=0ahUKEwjK06COyK_gAhUqIzQIHZIOBF8Q6AEIKDAA#v=onepage&q=fellowship%20of%20the%20ring&f=false";
+// $('#popular-book-container').empty();
+// for (i = 0; i < 1; i++) {
+//   // console.log("Book URL: " + bookURL); 
+
+//   // var theLink = "bookURL" + i;
+//   // MY ATTEMPT TO CREATE NESTED DIVS
+//   $('<div>', { class: 'col-3 book' }).append(
+//     $('<div>', { class: 'container' }).append(
+//       $('<div>', { class: 'row' }).append(
+//         $('<img>', {
+//           class: 'book-image',
+//           src: defaultRecommendedPics[i]
+//         }).append(
+//         )
+//       )),
+//     $('<div>', { class: 'row book-title' }).append(
+//       $('<h5>').text(defaultRecommendedTitles[0]).append(
+//         $('<a>').attr("href", defaultRecommendedLinks[i]).append(
+//           $('<img>', {
+//             id: 'eBook-image',
+//             src: "./assets/images/eBook3.png"
+//           }).attr("href", defaultRecommendedLinks[i])
+//         )
+//         // $('<a>').text(bookURL[i].volumeInfo.title).attr("href", bookURL[i].saleInfo.buyLink)   
+//       )
+//     )
+//   ).appendTo('#popular-book-container');
+// }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 function populateBooks() {
   // Empty popular book div before displaying new info
@@ -73,7 +141,31 @@ $("#search-button").on("click", function (event) {
   // Grabs user input
   searchByAuthor = $("#search-by-author").val().toLowerCase();
   searchByBook = $("#search-by-book").val().toLowerCase();
+  if(searchByAuthor == "" && searchByBook == ""){
+    $("#popular-title").text("You did not enter search parameters. Here are some recommendations: ");
+    authorSpotlight = authorSpotlightList[Math.floor(Math.random()*4)];
+    $.ajaxPrefilter(function (options) {
+      if (options.crossDomain && jQuery.support.cors) {
+        var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+        options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+        //options.url = "http://cors.corsproxy.io/url=" + options.url;
+      }
+    });
+    var searchURL = "https://www.googleapis.com/books/v1/volumes?q=+inauthor:" + authorSpotlight + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
+  
+    $.ajax({
+      url: searchURL,
+      method: "GET"
+    }).then(function (response) {
+      console.log(response);
+      // $("#popular-title").text("Author Spotlight: " + authorSpotlight);
+      bookURL = response.items;
+      populateBooks();
+      console.log('bookURL: ', bookURL);
+    }); 
 
+  }else{
+  $("#popular-title").text("You searched for: ");
   console.log('searchByAuthor: ', searchByAuthor);
   console.log('searchByBook: ', searchByBook);
 
@@ -121,7 +213,7 @@ $("#search-button").on("click", function (event) {
   console.log('searchedAuthor: ', searchedAuthor);
   var authorSearch = searchByAuthor;
   var titleSearch = searchByBook
-  var searchURL = "https://www.googleapis.com/books/v1/volumes?q=" + searchByBook + "+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
+  var searchURL = "https://www.googleapis.com/books/v1/volumes?q=" + titleSearch + "+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
 
   $.ajax({
     url: searchURL,
@@ -142,7 +234,7 @@ $("#search-button").on("click", function (event) {
 
   /////////////////////////////////////////////////////////////////////////////////////////////
 
-
+  }
 });
 
 // create an authors array of Brandon Sanderson
@@ -351,3 +443,4 @@ $(document).ready(function() {
   ui.start('#firebaseui-auth-container', uiConfig);
 
   });
+
