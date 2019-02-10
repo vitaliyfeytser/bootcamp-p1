@@ -416,3 +416,31 @@ getAuthorInfo("Conan Doyle");
 
 // use jQuery to populate author's most popular works from an object
 // use jQuery to populate author's complete works from an object
+
+
+////////////////////////////////////////////////////////////////////
+// PATRICK'S WORK - SIGN UP & SIGN-IN 
+
+$(document).ready(function() {
+  // Create a variable to reference the database.
+  database = firebase.database();
+
+  // FirebaseUI config.
+  var uiConfig = {
+    signInSuccessUrl: './index.html',
+    signInOptions: [
+      // Leave the lines as is for the providers you want to offer your users.
+      {
+        provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        requireDisplayName: false
+      },
+    ],
+  };
+
+  // Initialize the FirebaseUI Widget using Firebase.
+  var ui = new firebaseui.auth.AuthUI(firebase.auth());
+  // The start method will wait until the DOM is loaded.
+  ui.start('#firebaseui-auth-container', uiConfig);
+
+  });
+

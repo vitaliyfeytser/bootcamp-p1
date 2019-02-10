@@ -9,6 +9,9 @@ var config = {
 
  firebase.initializeApp(config);
 
+////////////////////////////////////////////////////////////////////
+// PATRICK'S WORK - SIGN UP & SIGN-IN 
+
 
 $(document).ready(function() {
   // Create a variable to reference the database.
