@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,8 @@
     <!-- link to css reset file -->
     <link rel="stylesheet" href="assets/css/reset.css">
     <!-- link to Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- link to custom css file -->
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
@@ -18,39 +20,67 @@
 <body>
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Sci-Fi & Fantasy Fandom</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
+        <a class="navbar-brand" href="#">Sci-Fi & Fantasy Fandom</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="./sign-in.html">Sign-Up/Sign-In</a>
+                    <a class="nav-link" href="./sign-in.html" data-toggle="modal"
+                        data-target="#exampleModal">Sign-Up/In</a>
                 </li>
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Members
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Members
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
                 </li>
-              </ul>
-              <!-- SEARCH FIELDS -->
-              <form class="form-inline my-2 my-lg-0">
-                <input id="search-by-author" class="form-control mr-sm-2" type="search" placeholder="Search by Author" aria-label="Search">
-                <input id="search-by-book" class="form-control mr-sm-2" type="search" placeholder="Search by Book" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="search-button">Search</button>
-              </form>
+            </ul>
+
+            <!-- SIGN-IN/UP MODAL -->
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" id="firebaseui-auth-container">
+                        <!-- <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sign-up or sign-in with your credentials:</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" >
+                        </div> -->
+                        <!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div> -->
+                    </div>
+                </div>
             </div>
-          </nav>
+
+            <!-- SEARCH FIELDS -->
+            <form class="form-inline my-2 my-lg-0">
+                <input id="search-by-author" class="form-control mr-sm-2" type="search" placeholder="Search by Author"
+                    aria-label="Search">
+                <input id="search-by-book" class="form-control mr-sm-2" type="search" placeholder="Search by Book"
+                    aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="search-button">Search</button>
+            </form>
+        </div>
+    </nav>
 
     <!-- CAROUSEL -->
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -62,7 +92,7 @@
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="./assets/images/cover-cosmere.jpg" class="d-block w-100" alt="...">
- 
+
             </div>
 
             <div class="carousel-item">
@@ -91,7 +121,8 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-3">
-                                <img id="author-image" src="assets/images/author-brandon-sanderson.jpg" class="rounded float-right author-img" alt="...">
+                                <img id="author-image" src="assets/images/author-brandon-sanderson.jpg"
+                                    class="rounded float-right author-img" alt="...">
                             </div>
                             <div class="col-9 author-box">
                                 <div class="container">
@@ -103,7 +134,11 @@
                                     </div>
 
                                     <div class="row">
-                                        <p class="author-bio" id="bio-caption">Brandon Sanderson (born December 19, 1975) is an American fantasy and science fiction writer. He is best known for the Cosmere universe, in which most of his fantasy novels (most notably the Mistborn series and The Stormlight Archive) are set. He is also known for finishing Robert Jordan's epic fantasy series The Wheel of Time.
+                                        <p class="author-bio" id="bio-caption">Brandon Sanderson (born December 19,
+                                            1975) is an American fantasy and science fiction writer. He is best known
+                                            for the Cosmere universe, in which most of his fantasy novels (most notably
+                                            the Mistborn series and The Stormlight Archive) are set. He is also known
+                                            for finishing Robert Jordan's epic fantasy series The Wheel of Time.
                                         </p>
                                     </div>
 
@@ -195,53 +230,70 @@
         <div id="complete-works-title">Author's Complete Works:</div>
 
         <table class="table table-sm table-hover">
-                <thead>
-                  <tr>
+            <thead>
+                <tr>
                     <th scope="col">#</th>
                     <th scope="col">Cover</th>
                     <th scope="col">Book</th>
                     <th scope="col">Date Published</th>
                     <th scope="col">Rating</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
                     <th scope="row">1</th>
                     <td><img class="table-book-image" src="assets/images/Way.jpg"></td>
                     <td class="table-book-name">The Way of Kings</td>
                     <td>August 31, 2010</td>
-                    <td class="last-column"><img class="table-rating-image" src="assets/images/Star_rating_4_of_5.png"></td>
-                  </tr>
-                  <tr>
+                    <td class="last-column"><img class="table-rating-image" src="assets/images/Star_rating_4_of_5.png">
+                    </td>
+                </tr>
+                <tr>
                     <th scope="row">2</th>
                     <td><img class="table-book-image" src="assets/images/Words.jpg"></td>
                     <td>Words of Radiance</td>
                     <td>March 14, 2014</td>
-                    <td class="last-column"><img class="table-rating-image" src="assets/images/Star_rating_3_of_5.png"></td>
-                  </tr>
-                  <tr>
+                    <td class="last-column"><img class="table-rating-image" src="assets/images/Star_rating_3_of_5.png">
+                    </td>
+                </tr>
+                <tr>
                     <th scope="row">3</th>
                     <td><img class="table-book-image" src="assets/images/Words.jpg"></td>
-                    <td >Oathbringer</td>
+                    <td>Oathbringer</td>
                     <td>November 14, 2017</td>
-                    <td class="last-column"><img class="table-rating-image" src="assets/images/Star_rating_5_of_5.png"></td>
-                  </tr>
-                </tbody>
-              </table>
+                    <td class="last-column"><img class="table-rating-image" src="assets/images/Star_rating_5_of_5.png">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
 
 
     <!-- Bootstrap Java and jQuery links -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
- <!-- Link to Firebase -->
-<script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
- <!-- Link to custom Javascript -->
-<script src="./assets/javascript/main.js"></script>   
+    <!-- Link to Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-app.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css">
+
+    <!-- Add additional services that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase-database.js"></script>
+    <!-- Link to custom Javascript -->
+    <script src="./assets/javascript/main.js"></script>
+    <!-- <script src="./assets/javascript/sign-in.js"></script>    -->
 
 </body>
+
 </html>
