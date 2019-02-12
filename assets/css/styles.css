@@ -88,6 +88,7 @@ body {
 }
 
 .book-image {
+    cursor: pointer;
     height: 18vw;
     /* Add shadows to create a 3D effect */
     box-shadow: 0 .1em .25em 0 black;
