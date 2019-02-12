@@ -34,6 +34,7 @@ var authors = [
   {
     firstName: "Brandon",
     lastName: "Sanderson",
+    fullName: "Brandon Sanderson",
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg/440px-Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg",
     caption: "Brandon Sanderson (born December 19, 1975) is an American fantasy and science fiction writer. He is best known for the Cosmere universe, in which most of his fantasy novels (most notably the Mistborn series and The Stormlight Archive) are set. He is also known for finishing Robert Jordan's epic fantasy series The Wheel of Time.",
     bibliography: [
@@ -67,6 +68,7 @@ var authors = [
   {
     firstName: "J. R. R.",
     lastName: "Tolkien",
+    fullName: "J.R.R. Tolkien",
     image: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolkien_1916.jpg",
     caption: "John Ronald Reuel Tolkien, CBE FRSL (/ruːl ˈtɒlkiːn/, ROOL TOL-keen;[a] 3 January 1892 – 2 September 1973) was an English writer, poet, philologist, and university professor who is best known as the author of the classic high fantasy works The Hobbit, The Lord of the Rings, and The Silmarillion.",
     bibliography: [
@@ -100,6 +102,7 @@ var authors = [
   {
     firstName: "Robert",
     lastName: "Jordan",
+    fullName: "Robert Jordan",
     image: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolkien_1916.jpg",
     caption: "James Oliver Rigney Jr. (October 17, 1948 – September 16, 2007), better known by his pen name Robert Jordan,[1] was an American author of epic fantasy. He is best known for the Wheel of Time series, which comprises 14 books and a prequel novel. He is one of several writers to have written original Conan the Barbarian novels; his are highly acclaimed to this day.",
     bibliography: [
@@ -133,6 +136,7 @@ var authors = [
   {
     firstName: "Alastair",
     lastName: "Reynolds",
+    fullName: "Alastair Reynolds",
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Alastair_Reynolds.jpg/400px-Alastair_Reynolds.jpg",
     caption: "Alastair Preston Reynolds (born 13 March 1966) is a British science fiction author. He specialises in hard science fiction and space opera. He spent his early years in Cornwall, moved back to Wales before going to Newcastle University, where he read physics and astronomy. Afterwards, he earned a PhD from the University of St Andrews.",
     bibliography: [
@@ -166,6 +170,7 @@ var authors = [
   {
     firstName: "Patrick",
     lastName: "Rothfuss",
+    fullName: "Patrick Rothfuss",
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Patrick-rothfuss-2014-kyle-cassidy.jpg/500px-Patrick-rothfuss-2014-kyle-cassidy.jpg",
     caption: "Patrick James Rothfuss (born June 6, 1973) is an American writer of epic fantasy. He is best known for his series The Kingkiller Chronicle, which won him several awards, including the 2007 Quill Award for his debut novel, The Name of the Wind. Its sequel, The Wise Man's Fear, topped The New York Times Best Seller list.",
     bibliography: [
@@ -197,14 +202,13 @@ var authors = [
   },
 ];
 
-////////////////////////////////Tyler's Code/////////////////////////////////////////////////////////////////
-//We can code the default recommended books here: //////////////////////////////////////////////
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   //Tyler's code here... for dynamic images
+  //First, it loads the intial "author spotlight:"
 
   var authorSpotlightList = ["J.R.R. Tolkien", "Brandon Sanderson", "Arthur Conan Doyle", "J.K. Rowling", "Timothy Zahn"];
-  var authorSpotlight = authorSpotlightList[Math.floor(Math.random()*5)];
+  var authorSpotlight = authors[Math.floor(Math.random()*5)].fullName;
   console.log(authorSpotlight);
 
   $.ajaxPrefilter(function (options) {
@@ -228,45 +232,10 @@ var authors = [
   });
   console.log('authors: ', authors);
 
-  /////////////////////////////////////////////////////////////////////////////////////////////
-
-// var defaultRecommendedTitles = ["Fellowship of the Ring", "Insert"];
-// var defaultRecommendedPics = ["a","b","c","d"];  //put 4 pictures in this array src: "./assets/images/eBook3.png"
-// defaultRecommendedPics[0].src = ".assets/images/Fellowship.jpg"
-// var defaultRecommendedLinks = ["a","b","c","d"]; //put 4 links in this array
-// defaultRecommendedLinks[0] = "https://books.google.com/books?id=aWZzLPhY4o0C&printsec=frontcover&dq=fellowship+of+the+ring&hl=en&sa=X&ved=0ahUKEwjK06COyK_gAhUqIzQIHZIOBF8Q6AEIKDAA#v=onepage&q=fellowship%20of%20the%20ring&f=false";
-// $('#popular-book-container').empty();
-// for (i = 0; i < 1; i++) {
-//   // console.log("Book URL: " + bookURL); 
-
-//   // var theLink = "bookURL" + i;
-//   // MY ATTEMPT TO CREATE NESTED DIVS
-//   $('<div>', { class: 'col-3 book' }).append(
-//     $('<div>', { class: 'container' }).append(
-//       $('<div>', { class: 'row' }).append(
-//         $('<img>', {
-//           class: 'book-image',
-//           src: defaultRecommendedPics[i]
-//         }).append(
-//         )
-//       )),
-//     $('<div>', { class: 'row book-title' }).append(
-//       $('<h5>').text(defaultRecommendedTitles[0]).append(
-//         $('<a>').attr("href", defaultRecommendedLinks[i]).append(
-//           $('<img>', {
-//             id: 'eBook-image',
-//             src: "./assets/images/eBook3.png"
-//           }).attr("href", defaultRecommendedLinks[i])
-//         )
-//         // $('<a>').text(bookURL[i].volumeInfo.title).attr("href", bookURL[i].saleInfo.buyLink)   
-//       )
-//     )
-//   ).appendTo('#popular-book-container');
-// }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+//This function populates the four (or less) recommended books based on the search ran through google books api.
+//It looks like it runs twice- but basically, the first checks if it is for sale by e-book on google books.
+//If so, it adds a clickable icon that takes the user to the google books site.
+//the "else" statement runs if the book is not for sale. It basically runs the same code, but does not append the clickable image link.
 function populateBooks() {
   // Empty popular book div before displaying new info
   $('#popular-book-container').empty();
@@ -310,14 +279,8 @@ function populateBooks() {
           )
         )),
       $('<div>', { class: 'row book-title' }).append(
-        $('<h5>').text(bookURL[i].volumeInfo.title).append(
-          $('<a>').attr("href", bookURL[i].saleInfo.buyLink).append(
-            // $('<img>', {
-            //   id: 'eBook-image',
-            //   src: "./assets/images/eBook3.png"
-            // }).attr("href", bookURL[i].saleInfo.buyLink)
-          )
-        )
+        $('<h5>').text(bookURL[i].volumeInfo.title)       
+        
       )
     ).appendTo('#popular-book-container');
   }
@@ -332,9 +295,10 @@ $("#search-button").on("click", function (event) {
   // Grabs user input
   searchByAuthor = $("#search-by-author").val();
   searchByBook = $("#search-by-book").val();
+  //If the user clicks the button without entering search info, the if statement runs, and displays one of our pre-selected recommended authors
   if(searchByAuthor == "" && searchByBook == ""){
-    authorSpotlight = authorSpotlightList[Math.floor(Math.random()*5)];
-    $("#popular-title").text("You did not enter search parameters. Here are some recommendations by " + authorSpotlight);
+    authorSpotlight = authors[Math.floor(Math.random()*5)].fullName; //randomly selects an author from the "authors" object above
+    $("#popular-title").text("You did not enter search parameters. Here are some recommendations by " + authorSpotlight + ":");
     $.ajaxPrefilter(function (options) {
       if (options.crossDomain && jQuery.support.cors) {
         var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
@@ -352,70 +316,36 @@ $("#search-button").on("click", function (event) {
       populateBooks();
       console.log('bookURL: ', bookURL);
       $("#author-image").attr('src', bookURL[0].volumeInfo.imageLinks.thumbnail);
-      $('#today-top').text("You didn't search anything! See our Author Spotlight!");
+      $('#today-top').text("Looking for a good read? Check out our Author Spotlight!");
       $('#author-name').text(authorSpotlight);
     }); 
     
-
+//This "else" is what runs if the user enters any search parameters.
   }else{
-    getAuthorInfo(searchByAuthor);
-    console.log("The author and book are these: " + searchByAuthor + " and " + searchByBook);
-    $("#popular-title").text("Testing");
+    //The if/elses below change the text based on the user's chosen search parameters: author only, book only, or both
     if(searchByAuthor == ""){
       $("#popular-title").text("You searched for the following book title: " + searchByBook);
     }else if(searchByBook == ""){
     $("#popular-title").text("You searched for the following author: " + searchByAuthor);
     console.log("You searched for: ", searchByAuthor);
     }else {
-      $("#popular-title").text("You searched for author and book title.");
+      $("#popular-title").text("You searched for " + searchByBook + " by " + searchByAuthor + ":");
     }
 
-  // Declare a variable for searched author that awaits an object
   var searchedAuthor = searchByAuthor;
-
-  // // Loop through authors to find a search match
-  // for (i = 0; i < authors.length; i++) {
-
-  //   console.log('authors[i].firstName.toLowerCase(): ', authors[i].firstName.toLowerCase());
-  //   console.log('authors[i].lastName.toLowerCase(): ', authors[i].lastName.toLowerCase());
-  //   console.log("authors[i].firstName.toLowerCase() + ' ' + authors[i].lastName.toLowerCase(): ", authors[i].firstName.toLowerCase() + ' ' + authors[i].lastName.toLowerCase());
-
-  //   if (searchByAuthor == authors[i].firstName.toLowerCase()  
-  //    || searchByAuthor == authors[i].lastName.toLowerCase()
-  //    || searchByAuthor == authors[i].firstName.toLowerCase() + ' ' + authors[i].lastName.toLowerCase()) {
-  //     console.log('It matches');
-
-  //     // set searchedAuthor variable to an object of the search match
-  //     searchedAuthor = authors[i];
-  //     console.log('searchedAuthor: ', searchedAuthor);
-
-  //    } else {
-  //      console.log("Sorry, there's no match.");
-  //    }
-
-  // };
-
-  // Replace info in 'Today's Top Author' div with 'You searched for:' info
-  $('#author-image').attr('src', searchedAuthor.image);
-  $('#today-top').text('YOU SEARCHED FOR:');
-  $('#author-name').text(searchedAuthor.firstName + ' ' + searchedAuthor.lastName);
-  $('#bio-caption').text(searchedAuthor.caption);
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   //Tyler's code here... for dynamic images
+  //This uses google API to get book thumbnail images and titles. See the function populateBooks().
   $.ajaxPrefilter(function (options) {
     if (options.crossDomain && jQuery.support.cors) {
       var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
       options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
-      //options.url = "http://cors.corsproxy.io/url=" + options.url;
     }
   });
-  console.log('searchedAuthor: ', searchedAuthor);
   var authorSearch = searchByAuthor;
   var titleSearch = searchByBook;
-  console.log(authorSearch, titleSearch)
   var searchURL = "https://www.googleapis.com/books/v1/volumes?q=" + titleSearch + "+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
-  console.log("The Search URL is: " + searchURL)
   $.ajax({
     url: searchURL,
     method: "GET"
@@ -423,6 +353,7 @@ $("#search-button").on("click", function (event) {
     console.log(response);
     bookURL = response.items;
     populateBooks();
+    //The clearing below is necessary so if the user wants a new search, the old search info doesn't interfere
     searchByAuthor = '';
     searchByBook = '';
   });
