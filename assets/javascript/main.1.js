@@ -197,38 +197,50 @@ var authors = [
   },
 ];
 
+
+
 ////////////////////////////////Tyler's Code/////////////////////////////////////////////////////////////////
 //We can code the default recommended books here: //////////////////////////////////////////////
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  //Tyler's code here... for dynamic images
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//Tyler's code here... for dynamic images
 
-  var authorSpotlightList = ["J.R.R. Tolkien", "Brandon Sanderson", "Arthur Conan Doyle", "J.K. Rowling", "Timothy Zahn"];
-  var authorSpotlight = authorSpotlightList[Math.floor(Math.random()*5)];
-  console.log(authorSpotlight);
 
-  $.ajaxPrefilter(function (options) {
-    if (options.crossDomain && jQuery.support.cors) {
-      var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
-      options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
-      //options.url = "http://cors.corsproxy.io/url=" + options.url;
-    }
-  });
-  var searchURL = "https://www.googleapis.com/books/v1/volumes?q=+inauthor:" + authorSpotlight + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
+var authorSpotlightList = ["J.R.R. Tolkien", "Brandon Sanderson", "Arthur Conan Doyle", "J.K. Rowling"]
+var authorSpotlight = authorSpotlightList[Math.floor(Math.random() * 4)];
+console.log('authorSpotlight: ', authorSpotlight);
+var authorSpotlightList = ["J.R.R. Tolkien", "Brandon Sanderson", "Arthur Conan Doyle", "J.K. Rowling", "Timothy Zahn"];
+var authorSpotlight = authorSpotlightList[Math.floor(Math.random() * 5)];
+console.log(authorSpotlight);
 
-  $.ajax({
-    url: searchURL,
-    method: "GET"
-  }).then(function (response) {
-    console.log(response);
-    $("#popular-title").text("Author Spotlight: " + authorSpotlight);
-    bookURL = response.items;
-    populateBooks();
-    console.log('bookURL: ', bookURL);
-  });
-  console.log('authors: ', authors);
 
-  /////////////////////////////////////////////////////////////////////////////////////////////
+getAuthorInfo(authorSpotlight);
+
+// Global Heroku ajax Prefilter for all ajax calls
+$.ajaxPrefilter(function (options) {
+  if (options.crossDomain && jQuery.support.cors) {
+    var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+    options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+    //options.url = "http://cors.corsproxy.io/url=" + options.url;
+  }
+});
+
+
+var searchURL = "https://www.googleapis.com/books/v1/volumes?q=+inauthor:" + authorSpotlight + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
+
+$.ajax({
+  url: searchURL,
+  method: "GET"
+}).then(function (response) {
+  console.log('response: ', response);
+  $("#popular-title").text("Author Spotlight: " + authorSpotlight);
+  bookURL = response.items;
+  populateBooks();
+  console.log('bookURL: ', bookURL);
+});
+console.log('authors: ', authors);
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 // var defaultRecommendedTitles = ["Fellowship of the Ring", "Insert"];
 // var defaultRecommendedPics = ["a","b","c","d"];  //put 4 pictures in this array src: "./assets/images/eBook3.png"
@@ -266,7 +278,6 @@ var authors = [
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 function populateBooks() {
   // Empty popular book div before displaying new info
   $('#popular-book-container').empty();
@@ -276,10 +287,72 @@ function populateBooks() {
 
     // var theLink = "bookURL" + i;
     // MY ATTEMPT TO CREATE NESTED DIVS
-    // CREATE BOOKS WITH E-BOOK TAG
-  if (bookURL[i].saleInfo.saleability == "FOR_SALE"){
-    $('<div>', { class: 'col-3 book' }).append(
-      $('<div>', { class: 'container' }).append(
+    if (bookURL[i].saleInfo.saleability == "FOR_SALE") {
+      $('<div>', { class: 'col-3 book' }).append(
+        $('<div>', { class: 'container' }).append(
+          $('<div>', { class: 'row' }).append(
+            $('<img>', {
+              class: 'book-image',
+              src: bookURL[i].volumeInfo.imageLinks.thumbnail
+            }).append(
+            )
+          )),
+        $('<div>', { class: 'row book-title' }).append(
+          $('<h5>').text(bookURL[i].volumeInfo.title).append(
+            $('<a>').attr("href", bookURL[i].saleInfo.buyLink).append(
+              $('<img>', {
+                id: 'eBook-image',
+                src: "./assets/images/eBook3.png"
+              }).attr("href", bookURL[i].saleInfo.buyLink)
+            )
+          )
+        )
+      ).appendTo('#popular-book-container');
+    } else {
+      $('<div>', { class: 'col-3 book' }).append(
+        $('<div>', { class: 'container' }).append(
+          $('<div>', { class: 'row' }).append(
+            $('<img>', {
+              class: 'book-image',
+              src: bookURL[i].volumeInfo.imageLinks.thumbnail
+            }).append(
+            )
+          )),
+        $('<div>', { class: 'row book-title' }).append(
+          $('<h5>').text(bookURL[i].volumeInfo.title).append(
+            $('<a>').attr("href", bookURL[i].saleInfo.buyLink).append(
+              // $('<img>', {
+              //   id: 'eBook-image',
+              //   src: "./assets/images/eBook3.png"
+              // }).attr("href", bookURL[i].saleInfo.buyLink)
+            )
+          )
+        )
+      ).appendTo('#popular-book-container');
+    }
+  };
+}
+
+
+function populateTable() {
+  // Empty popular book div before displaying new info
+  $('#books-table').empty();
+  // for (i = 0; i < searchedAuthor.bibliography.length; i++) {
+  for (i = 0; i < 4; i++) {
+    // console.log("Book URL: " + bookURL); 
+    // <tr>
+    //   <th scope="row">1</th>
+    //   <td><img class="table-book-image" src="assets/images/Way.jpg"></td>
+    //     <td class="table-book-name">The Way of Kings</td>
+    //     <td>August 31, 2010</td>
+    //     <td class="last-column"><img class="table-rating-image" src="assets/images/Star_rating_4_of_5.png"></td>
+    // </tr>
+
+
+    // var theLink = "bookURL" + i;
+    // MY ATTEMPT TO CREATE NESTED DIVS
+    $('<tr>').append(
+      $('<th>', { scope: 'row', }).append(
         $('<div>', { class: 'row' }).append(
           $('<img>', {
             class: 'book-image',
@@ -295,80 +368,140 @@ function populateBooks() {
               src: "./assets/images/eBook3.png"
             }).attr("href", bookURL[i].saleInfo.buyLink)
           )
+          // $('<a>').text(bookURL[i].volumeInfo.title).attr("href", bookURL[i].saleInfo.buyLink)
         )
       )
     ).appendTo('#popular-book-container');
-  // THIS CREATES BOOK WITHOUT E-BOOK TAG
-  } else {
-    $('<div>', { class: 'col-3 book' }).append(
-      $('<div>', { class: 'container' }).append(
-        $('<div>', { class: 'row' }).append(
-          $('<img>', {
-            class: 'book-image',
-            src: bookURL[i].volumeInfo.imageLinks.thumbnail
-          }).append(
-          )
-        )),
-      $('<div>', { class: 'row book-title' }).append(
-        $('<h5>').text(bookURL[i].volumeInfo.title).append(
-          $('<a>').attr("href", bookURL[i].saleInfo.buyLink).append(
-            // $('<img>', {
-            //   id: 'eBook-image',
-            //   src: "./assets/images/eBook3.png"
-            // }).attr("href", bookURL[i].saleInfo.buyLink)
-          )
-        )
-      )
-    ).appendTo('#popular-book-container');
-  }
   };
-}
 
+  // On-click event listener for the 'Search' button
+  $("#search-button").on("click", function (event) {
+    event.preventDefault();
 
-// On-click event listener for the 'Search' button
-$("#search-button").on("click", function (event) {
-  event.preventDefault();
+    // Grabs user input
 
-  // Grabs user input
-  searchByAuthor = $("#search-by-author").val();
-  searchByBook = $("#search-by-book").val();
-  if(searchByAuthor == "" && searchByBook == ""){
-    authorSpotlight = authorSpotlightList[Math.floor(Math.random()*5)];
-    $("#popular-title").text("You did not enter search parameters. Here are some recommendations by " + authorSpotlight);
-    $.ajaxPrefilter(function (options) {
-      if (options.crossDomain && jQuery.support.cors) {
-        var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
-        options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
-      }
-    });
-    var searchURL = "https://www.googleapis.com/books/v1/volumes?q=+inauthor:" + authorSpotlight + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
-  
-    $.ajax({
-      url: searchURL,
-      method: "GET"
-    }).then(function (response) {
-      console.log(response);
-      bookURL = response.items;
-      populateBooks();
-      console.log('bookURL: ', bookURL);
-      $("#author-image").attr('src', bookURL[0].volumeInfo.imageLinks.thumbnail);
-      $('#today-top').text("You didn't search anything! See our Author Spotlight!");
-      $('#author-name').text(authorSpotlight);
-    }); 
-    
+    searchByAuthor = $("#search-by-author").val().toLowerCase();
+    searchByBook = $("#search-by-book").val().toLowerCase();
 
-  }else{
     getAuthorInfo(searchByAuthor);
-    console.log("The author and book are these: " + searchByAuthor + " and " + searchByBook);
-    $("#popular-title").text("Testing");
-    if(searchByAuthor == ""){
-      $("#popular-title").text("You searched for the following book title: " + searchByBook);
-    }else if(searchByBook == ""){
+
+    if (searchByAuthor == "" && searchByBook == "") {
+      $("#popular-title").text("You did not enter search parameters. Here are some recommendations: ");
+      authorSpotlight = authorSpotlightList[Math.floor(Math.random() * 4)];
+
+      searchByAuthor = $("#search-by-author").val();
+      searchByBook = $("#search-by-book").val();
+      if (searchByAuthor == "" && searchByBook == "") {
+        authorSpotlight = authorSpotlightList[Math.floor(Math.random() * 5)];
+        $("#popular-title").text("You did not enter search parameters. Here are some recommendations by " + authorSpotlight);
+
+        $.ajaxPrefilter(function (options) {
+          if (options.crossDomain && jQuery.support.cors) {
+            var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+            options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+          }
+        });
+        var searchURL = "https://www.googleapis.com/books/v1/volumes?q=+inauthor:" + authorSpotlight + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
+
+        $.ajax({
+          url: searchURL,
+          method: "GET"
+        }).then(function (response) {
+          console.log(response);
+          bookURL = response.items;
+          populateBooks();
+          console.log('bookURL: ', bookURL);
+
+        });
+
+      } else {
+        $("#popular-title").text("You searched for: ");
+        console.log('searchByAuthor: ', searchByAuthor);
+        console.log('searchByBook: ', searchByBook);
+
+        // Declare a variable for searched author that awaits an object
+        var searchedAuthor = searchByAuthor;
+        var searchedBook = {};
+
+        // // Loop through authors to find a search match
+        // for (i = 0; i < authors.length; i++) {
+
+        //   console.log('authors[i].firstName.toLowerCase(): ', authors[i].firstName.toLowerCase());
+        //   console.log('authors[i].lastName.toLowerCase(): ', authors[i].lastName.toLowerCase());
+        //   console.log("authors[i].firstName.toLowerCase() + ' ' + authors[i].lastName.toLowerCase(): ", authors[i].firstName.toLowerCase() + ' ' + authors[i].lastName.toLowerCase());
+
+        //   if (searchByAuthor == authors[i].firstName.toLowerCase()  
+        //    || searchByAuthor == authors[i].lastName.toLowerCase()
+        //    || searchByAuthor == authors[i].firstName.toLowerCase() + ' ' + authors[i].lastName.toLowerCase()) {
+        //     console.log('It matches');
+
+        //     // set searchedAuthor variable to an object of the search match
+        //     searchedAuthor = authors[i];
+        //     console.log('searchedAuthor: ', searchedAuthor);
+
+        //    } else {
+        //      console.log("Sorry, there's no match.");
+        //    }
+
+        // };
+
+        // Replace info in 'Today's Top Author' div with 'You searched for:' info
+        $('#author-image').attr('src', searchedAuthor.image);
+        $('#today-top').text('YOU SEARCHED FOR:');
+        $('#author-name').text(searchedAuthor.firstName + ' ' + searchedAuthor.lastName);
+        $('#bio-caption').text(searchedAuthor.caption);
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        //Tyler's code here... for dynamic images
+        $.ajaxPrefilter(function (options) {
+          if (options.crossDomain && jQuery.support.cors) {
+            var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+            options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+            //options.url = "http://cors.corsproxy.io/url=" + options.url;
+          }
+        });
+        console.log('searchedAuthor: ', searchedAuthor);
+        var authorSearch = searchByAuthor;
+        var titleSearch = searchByBook
+        var searchURL = "https://www.googleapis.com/books/v1/volumes?q=" + titleSearch + "+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
+
+        $.ajax({
+          url: searchURL,
+          method: "GET"
+        }).then(function (response) {
+          console.log(response);
+          bookURL = response.items;
+          populateBooks();
+          // bookURL1 = response.items[0].saleInfo.buyLink;
+          // bookURL2 = response.items[1].saleInfo.buyLink;
+          // bookURL3 = response.items[2].saleInfo.buyLink;
+          // bookURL4 = response.items[3].saleInfo.buyLink;
+          // console.log("This is the book URL: " + bookURL1);
+          // $("#theLink").attr("href", bookURL1);
+          console.log('bookURL: ', bookURL);
+        });
+        console.log('authors: ', authors);
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#author-image").attr('src', bookURL[0].volumeInfo.imageLinks.thumbnail);
+        $('#today-top').text("You didn't search anything! See our Author Spotlight!");
+        $('#author-name').text(authorSpotlight);
+      });
+
+
+}else {
+  getAuthorInfo(searchByAuthor);
+  console.log("The author and book are these: " + searchByAuthor + " and " + searchByBook);
+  $("#popular-title").text("Testing");
+  if (searchByAuthor == "") {
+    $("#popular-title").text("You searched for the following book title: " + searchByBook);
+  } else if (searchByBook == "") {
     $("#popular-title").text("You searched for the following author: " + searchByAuthor);
     console.log("You searched for: ", searchByAuthor);
-    }else {
-      $("#popular-title").text("You searched for author and book title.");
-    }
+  } else {
+    $("#popular-title").text("You searched for author and book title.");
+  }
 
   // Declare a variable for searched author that awaits an object
   var searchedAuthor = searchByAuthor;
@@ -427,103 +560,146 @@ $("#search-button").on("click", function (event) {
     searchByBook = '';
   });
 
-  }
+
+}
 });
 
+// create an authors array of Brandon Sanderson
+// create a limited complete works object of Brandon Sanderson's works - simulate populating divs from here
 
+// var topAuthorName = "";
+// var topAuthorImage = "";
+// var topAuthorCaption = "";
+
+// var authorsList = [
+//   "Brandon Sanderson",
+//   "J. R. R. Tolkien",
+//   "Robert Jordan",
+//   "John Scalzi",
+//   "Stephen King"
+// ];
+
+
+// var brandonSanderson = {
+//   firstName: "Brandon",
+//   lastName: "Sanderson",
+//   image: "https://en.wikipedia.org/wiki/File:Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg",
+//   caption: "Brandon Sanderson (born December 19, 1975) is an American fantasy and science fiction writer. He is best known for the Cosmere universe, in which most of his fantasy novels (most notably the Mistborn series and The Stormlight Archive) are set. He is also known for finishing Robert Jordan's epic fantasy series The Wheel of Time.",
+//   bibliography: {
+//     type: "Book",
+//     bookName: "The Way of Kings",
+//     coverLink: "https://en.wikipedia.org/wiki/File:TheWayOfKings.png",
+//     sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
+//   }
+// };
+// console.log('brandonSanderson: ', brandonSanderson);
+
+// var fyodorDostoyevsky = {
+//   firstName: "Fyodor",
+//   lastName: "Dostoevsky",
+//   image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Dostoevskij_1876.jpg/440px-Dostoevskij_1876.jpg',
+//   caption: "Fyodor Mikhailovich Dostoevsky[a] (/ˌdɒstəˈjɛfski, ˌdʌs-/;[1] Russian: Фёдор Михайлович Достоевский[b], tr. Fyódor Mikháylovich Dostoyévskiy, IPA: [ˈfʲɵdər mʲɪˈxajləvʲɪtɕ dəstɐˈjɛfskʲɪj] (About this soundlisten); 11 November 1821 – 9 February 1881[2][c]), sometimes transliterated Dostoyevsky, was a Russian novelist, short story writer, essayist, journalist and philosopher. Dostoevsky's literary works explore human psychology in the troubled political, social, and spiritual atmospheres of 19th-century Russia, and engage with a variety of philosophical and religious themes.",
+//   bibliography: {
+//     type: "Book",
+//     bookName: "Demons",
+//     coverLink: "https://upload.wikimedia.org/wikipedia/en/6/6d/Demons_%28Fyodor_Dostoyevsky%29.jpg",
+//     sellerLink: "https://smile.amazon.com/Demons-Penguin-Classics-Fyodor-Dostoevsky/dp/0141441410/ref=sr_1_4?s=books&ie=UTF8&qid=1549427616&sr=1-4&keywords=demons+dostoyevsky"
+//   }
+// };
+// console.log('fyodorDostoyevsky: ', fyodorDostoyevsky);
+
+
+///////////////////////////////////////////////////////////
 //Kristal's API for Wiki media for the image and boi. 
 // Function calling the API Author Search
-function getAuthorInfo(authorSearch){
+function getAuthorInfo(authorSearch) {
   $.ajax({
     url: "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=" + authorSearch,
     method: "GET",
-  }).then(function(response) {
-      console.log(response, "query")
+  }).then(function (response) {
+    console.log(response, "query")
 
-      console.log(response.query.search[0].snippet);
+    console.log(response.query.search[0].snippet);
 
-      var target = response.query.search[0];
+    var target = response.query.search[0];
 
-      console.log("https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=images", "url");
+    console.log("https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=images", "url");
+
+    $.ajax({
+      url: "https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=images&format=json",
+      method: "GET"
+    }).then(function (response) {
+      console.log(response, "images");
+
+      var image = response.parse.images[0];
+
+      console.log("https://en.wikipedia.org/w/api.php?action=query&titles=Image:" + encodeURIComponent(image) + "&prop=imageinfo&iiprop=url");
 
       $.ajax({
-        url: "https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=images&format=json",
+        url: "https://en.wikipedia.org/w/api.php?action=query&titles=Image:" + encodeURIComponent(image) + "&prop=imageinfo&iiprop=url&format=json",
         method: "GET"
-      }).then(function(response) {
-        console.log(response, "images");
+      }).then(function (response) {
+        console.log(response, "imageURL");
 
-        var image = response.parse.images[0];
+        console.log(response.query.pages[Object.keys(response.query.pages)[0]].imageinfo[0].url);
 
-        console.log("https://en.wikipedia.org/w/api.php?action=query&titles=Image:" + encodeURIComponent(image) + "&prop=imageinfo&iiprop=url");
 
-        $.ajax({
-          url: "https://en.wikipedia.org/w/api.php?action=query&titles=Image:" + encodeURIComponent(image) + "&prop=imageinfo&iiprop=url&format=json",
-          method: "GET"
-        }).then(function(response){
-          console.log(response, "imageURL");
+        $("#author-image").attr('src', response.query.pages[Object.keys(response.query.pages)[0]].imageinfo[0].url);
 
-          console.log(response.query.pages[Object.keys(response.query.pages)[0]].imageinfo[0].url);
-
-          // $("#author-image").attr('src', response.query.pages[Object.keys(response.query.pages)[0]].imageinfo[0].url); 
-          $("#author-image").attr('src', bookURL[0].volumeInfo.imageLinks.thumbnail); //I changed the image from wikipedia to google books. -Tyler
-        })
+        // $("#author-image").attr('src', response.query.pages[Object.keys(response.query.pages)[0]].imageinfo[0].url); 
+        $("#author-image").attr('src', bookURL[0].volumeInfo.imageLinks.thumbnail); //I changed the image from wikipedia to google books. -Tyler
       })
 
-      //Calling the first pargraph of the bio
-    $.ajax({
-      url:"https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=text&format=json",           
-      method:"GET"
-    }).then(function(response){
-      console.log(response, "wikitext");
-
-      $("#author-name").text(response.parse.title);
-
-      $text = $(response.parse.text['*']);
-
-      console.log($text);
-
-      //$text.removeAll(".mw-empty-elt");
-      
-      console.log($text.find("p")[1]);
-
-      var bio = $($text.find("p")[1]);
-
-      console.log(bio);
-
-      bio = bio.text().replace(/]+>/gi, '');
-
-      $("#bio-caption").html(bio);
-    
     })
+  })
+
+  //Calling the first pargraph of the bio
+  $.ajax({
+    url: "https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=text&format=json",
+    method: "GET"
+  }).then(function (response) {
+    console.log(response, "wikitext");
+
+    $("#author-name").text(response.parse.title);
+
+    $text = $(response.parse.text['*']);
+
+    console.log($text);
+
+    //$text.removeAll(".mw-empty-elt");
+
+    console.log($text.find("p")[1]);
+
+    var bio = $($text.find("p")[1]);
+
+    console.log(bio);
+
+    bio = bio.text().replace(/]+>/gi, '');
+
+    $("#bio-caption").html(bio);
 
   })
+
+})
 }
+
 
 getAuthorInfo(authorSpotlight);
 
 
+// use jQuery to populate 'Today's Top Author' from an object
 
-////////////////////////////////////////////////////////////////////
-// KRISTAL's Favor Button
-$(".btn btn-defaults").on("click", function (event) {
-  event.preventDefault();
 
-  var favorid = $(this).attr(".container popular-books");
 
-  if (firebase.auth().currentUser !== null) 
-     console.log("user id: " + firebase.auth().currentUser.uid);
 
-  var userid = "test";
+// use jQuery to populate author's most popular works from an object
+// use jQuery to populate author's complete works from an object
 
-  database.ref("/" + userid + "/favorite").push({
-    favorite: "row book-title"
-  })
-});
 
 ////////////////////////////////////////////////////////////////////
 // PATRICK'S WORK - SIGN UP & SIGN-IN 
 
-$(document).ready(function() {
+$(document).ready(function () {
   // Create a variable to reference the database.
   database = firebase.database();
 
@@ -534,43 +710,15 @@ $(document).ready(function() {
       // Leave the lines as is for the providers you want to offer your users.
       {
         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        requireDisplayName: true
+        requireDisplayName: false
       },
     ],
   };
 
-  // // Initialize the FirebaseUI Widget using Firebase.
+  // Initialize the FirebaseUI Widget using Firebase.
   var ui = new firebaseui.auth.AuthUI(firebase.auth());
-  // // The start method will wait until the DOM is loaded.
+  // The start method will wait until the DOM is loaded.
   ui.start('#firebaseui-auth-container', uiConfig);
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      // User is signed in.
-      $('#member-dropdown').removeAttr('style');
-      console.log('user.displayName', user.displayName);
-      $('#navbarDropdown').text(user.displayName);
+});
 
-    } else {
-      // No user is signed in.
-    }
-  });
-
-// PATRICK's signout button 
-  firebase.auth().signOut().then(function() {
-    // Sign-out successful.
-  }).catch(function(error) {
-    // An error happened.
-  });
-
-  });
-
-
-
-// use jQuery to populate 'Today's Top Author' from an object
-
-
-
-
-// use jQuery to populate author's most popular works from an object
-// use jQuery to populate author's complete works from an object
