@@ -11,6 +11,12 @@ body {
     */
 }
 
+#sign-in-modal {
+    background: none;
+    /* box-shadow: none; */
+    border: none;
+}
+
 .carousel-inner {
     box-shadow: 0 0 .5em 0 black;
     transition: 0.3s;
@@ -106,9 +112,13 @@ body {
 
 /* COMPLETE WORKS TABLE */
 
-#complete-works-title {
+.complete-works-title {
     margin: 1em 0em;
     font-weight: bold;
+}
+
+.side-table {
+    background-color: whitesmoke;
 }
 
 .table-book-image {
@@ -124,9 +134,17 @@ body {
 }
 
 #eBook-image {
-    height: 15px;
-    width: 15px;
-    margin-left: 3px;
+    height: 2em;
+    width: 2em;
+    margin-left: .5em;
+    /* opacity: 0.5;
+    filter: alpha(opacity=50); */
+}
+
+.favorite-button {
+    height: 2em;
+    width: 2em;
+    margin-left: .5em;
     /* opacity: 0.5;
     filter: alpha(opacity=50); */
 }
