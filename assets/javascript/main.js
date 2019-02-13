@@ -236,23 +236,24 @@ var authors = [
 //It looks like it runs twice- but basically, the first checks if it is for sale by e-book on google books.
 //If so, it adds a clickable icon that takes the user to the google books site.
 //the "else" statement runs if the book is not for sale. It basically runs the same code, but does not append the clickable image link.
+
 function populateBooks() {
   // Empty popular book div before displaying new info
   $('#popular-book-container').empty();
   // for (i = 0; i < searchedAuthor.bibliography.length; i++) {
   for (i = 0; i < 4; i++) {
     // console.log("Book URL: " + bookURL); 
-
+    // console.log('bookURL[i].volumeInfo.auhtors[0]: ', bookURL[i].volumeInfo.auhtors[0]);
     // var theLink = "bookURL" + i;
     // MY ATTEMPT TO CREATE NESTED DIVS
     // CREATE BOOKS WITH E-BOOK TAG
-  if (bookURL[i].saleInfo.saleability == "FOR_SALE"){
-    $('<div>', { class: 'col-3 book' }).append(
-      $('<div>', { class: 'container' }).append(
-        $('<div>', { class: 'row' }).append(
-          $('<img>', {
-            class: 'book-image',
-            src: bookURL[i].volumeInfo.imageLinks.thumbnail
+    if (bookURL[i].saleInfo.saleability == "FOR_SALE") {
+      $('<div>', { class: 'col-3 book' }).append(
+        $('<div>', { class: 'container' }).append(
+          $('<div>', {
+            class: 'row book-row'
+            // onclick: 'favoriteBook()',
+            // data_cover: bookURL[i].volumeInfo.imageLinks.thumbnail
           }).append(
           )
         )),
@@ -265,31 +266,73 @@ function populateBooks() {
           $('<a>').attr({
             href: bookURL[i].saleInfo.buyLink,
             target: "_blank" }).append(
+            // 4 LARGE BOOK IMAGES AT TOP - AUTHOR SPOTLIGH
             $('<img>', {
-              id: 'eBook-image',
-              src: "./assets/images/eBook3.png"
-            }).attr("href", bookURL[i].saleInfo.buyLink)
+              // onclick: 'favoriteBook()',
+              class: 'book-image',
+              src: bookURL[i].volumeInfo.imageLinks.thumbnail
+              // 'data-author': bookURL[i].volumeInfo.auhtors[0]
+            }).append(
+            ),
+            // FAVORITE BUTTON /////////////////////////////////////////////////////////
+            // LINK DIV FOR E-BOOK BUTTON
+            $('<div class="col">').append(
+              $('<img>', {
+                class: 'favorite-button',
+                src: "./assets/images/favorite-heart-blank.png"
+              }),
+
+              // LINK DIV FOR E-BOOK BUTTON
+              $('<a>', {
+                href: bookURL[i].saleInfo.buyLink,
+                target: "_blank",
+              }).append(
+                // E-BOOK BUTTON IMAGE
+                $('<img>', {
+                  id: 'eBook-image',
+                  src: "./assets/images/ebook4.png"
+                })
+              )
+            ),
+          )),
+        $('<div>', { class: 'row book-title' }).append(
+          // BOOK TITLE
+          $('<h5>').text(bookURL[i].volumeInfo.title).append(
+
           )
         )
-      )
-    ).appendTo('#popular-book-container');
-  // THIS CREATES BOOK WITHOUT E-BOOK TAG
-  } else {
-    $('<div>', { class: 'col-3 book' }).append(
-      $('<div>', { class: 'container' }).append(
-        $('<div>', { class: 'row' }).append(
-          $('<img>', {
-            class: 'book-image',
-            src: bookURL[i].volumeInfo.imageLinks.thumbnail
-          }).append(
-          )
-        )),
-      $('<div>', { class: 'row book-title' }).append(
-        $('<h5>').text(bookURL[i].volumeInfo.title)       
-        
-      )
-    ).appendTo('#popular-book-container');
-  }
+
+      ).appendTo('#popular-book-container');
+      // THIS CREATES BOOK WITHOUT E-BOOK TAG
+    } else {
+      $('<div>', { class: 'col-3 book' }).append(
+        $('<div>', { class: 'container' }).append(
+          $('<div>', { class: 'row book-row' }).append(
+            $('<img>', {
+              class: 'book-image',
+              src: bookURL[i].volumeInfo.imageLinks.thumbnail
+            }).append(
+            ),
+            // FAVORITE BUTTON /////////////////////////////////////////////////////////////
+            $('<img>', {
+              class: 'favorite-button',
+              src: "./assets/images/favorite-heart-red.png"
+            }).append(
+            )
+          )),
+        $('<div>', { class: 'row book-title' }).append(
+          $('<h5>').text(bookURL[i].volumeInfo.title).append(
+            //$('<a>').attr("href", bookURL[i].saleInfo.buyLink).append(
+              // $('<img>', {
+              //   id: 'eBook-image',
+              //   src: "./assets/images/eBook3.png"
+              // }).attr("href", bookURL[i].saleInfo.buyLink)
+            //)
+          //)
+        )
+      ).appendTo('#popular-book-container');
+    }
+
   };
 }
 
@@ -301,11 +344,13 @@ $("#search-button").on("click", function (event) {
   // Grabs user input
   searchByAuthor = $("#search-by-author").val();
   searchByBook = $("#search-by-book").val();
+
   //If the user clicks the button without entering search info, the if statement runs, and displays one of our pre-selected recommended authors
   if(searchByAuthor == "" && searchByBook == ""){
     var authorNumber = Math.floor(Math.random()*5);
     authorSpotlight = authors[authorNumber].fullName; //randomly selects an author from the "authors" object above
     $("#popular-title").text("You did not enter search parameters. Here are some recommendations by " + authorSpotlight + ":");
+
     $.ajaxPrefilter(function (options) {
       if (options.crossDomain && jQuery.support.cors) {
         var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
@@ -313,7 +358,7 @@ $("#search-button").on("click", function (event) {
       }
     });
     var searchURL = "https://www.googleapis.com/books/v1/volumes?q=+inauthor:" + authorSpotlight + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
-  
+
     $.ajax({
       url: searchURL,
       method: "GET"
@@ -372,47 +417,47 @@ $("#search-button").on("click", function (event) {
 
 //Kristal's API for Wiki media for the image and boi. 
 // Function calling the API Author Search
-function getAuthorInfo(authorSearch){
+function getAuthorInfo(authorSearch) {
   $.ajax({
     url: "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=" + authorSearch,
     method: "GET",
-  }).then(function(response) {
-      console.log(response, "query")
+  }).then(function (response) {
+    console.log(response, "query")
 
-      console.log(response.query.search[0].snippet);
+    console.log(response.query.search[0].snippet);
 
-      var target = response.query.search[0];
+    var target = response.query.search[0];
 
-      console.log("https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=images", "url");
+    console.log("https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=images", "url");
+
+    $.ajax({
+      url: "https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=images&format=json",
+      method: "GET"
+    }).then(function (response) {
+      console.log(response, "images");
+
+      var image = response.parse.images[0];
+
+      console.log("https://en.wikipedia.org/w/api.php?action=query&titles=Image:" + encodeURIComponent(image) + "&prop=imageinfo&iiprop=url");
 
       $.ajax({
-        url: "https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=images&format=json",
+        url: "https://en.wikipedia.org/w/api.php?action=query&titles=Image:" + encodeURIComponent(image) + "&prop=imageinfo&iiprop=url&format=json",
         method: "GET"
-      }).then(function(response) {
-        console.log(response, "images");
+      }).then(function (response) {
+        console.log(response, "imageURL");
 
-        var image = response.parse.images[0];
+        console.log(response.query.pages[Object.keys(response.query.pages)[0]].imageinfo[0].url);
 
-        console.log("https://en.wikipedia.org/w/api.php?action=query&titles=Image:" + encodeURIComponent(image) + "&prop=imageinfo&iiprop=url");
-
-        $.ajax({
-          url: "https://en.wikipedia.org/w/api.php?action=query&titles=Image:" + encodeURIComponent(image) + "&prop=imageinfo&iiprop=url&format=json",
-          method: "GET"
-        }).then(function(response){
-          console.log(response, "imageURL");
-
-          console.log(response.query.pages[Object.keys(response.query.pages)[0]].imageinfo[0].url);
-
-          // $("#author-image").attr('src', response.query.pages[Object.keys(response.query.pages)[0]].imageinfo[0].url); 
-          $("#author-image").attr('src', bookURL[0].volumeInfo.imageLinks.thumbnail); //I changed the image from wikipedia to google books. -Tyler
-        })
+        // $("#author-image").attr('src', response.query.pages[Object.keys(response.query.pages)[0]].imageinfo[0].url); 
+        $("#author-image").attr('src', bookURL[0].volumeInfo.imageLinks.thumbnail); //I changed the image from wikipedia to google books. -Tyler
       })
+    })
 
-      //Calling the first pargraph of the bio
+    //Calling the first pargraph of the bio
     $.ajax({
-      url:"https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=text&format=json",           
-      method:"GET"
-    }).then(function(response){
+      url: "https://en.wikipedia.org/w/api.php?action=parse&pageid=" + target.pageid + "&prop=text&format=json",
+      method: "GET"
+    }).then(function (response) {
       console.log(response, "wikitext");
 
       $("#author-name").text(response.parse.title);
@@ -422,7 +467,7 @@ function getAuthorInfo(authorSearch){
       console.log($text);
 
       //$text.removeAll(".mw-empty-elt");
-      
+
       console.log($text.find("p")[1]);
 
       var bio = $($text.find("p")[1]);
@@ -432,7 +477,7 @@ function getAuthorInfo(authorSearch){
       bio = bio.text().replace(/]+>/gi, '');
 
       $("#bio-caption").html(bio);
-    
+
     })
 
   })
@@ -441,30 +486,104 @@ function getAuthorInfo(authorSearch){
 getAuthorInfo(authorSpotlight);
 
 
-
 ////////////////////////////////////////////////////////////////////
-// KRISTAL's Favor Button
-$(".btn btn-defaults").on("click", function (event) {
-  event.preventDefault();
-
-  var favorid = $(this).attr(".container popular-books");
-
-  if (firebase.auth().currentUser !== null) 
-     console.log("user id: " + firebase.auth().currentUser.uid);
-
-  var userid = "test";
-
-  database.ref("/" + userid + "/favorite").push({
-    favorite: "row book-title"
-  })
-});
-
 ////////////////////////////////////////////////////////////////////
-// PATRICK'S WORK - SIGN UP & SIGN-IN 
-
-$(document).ready(function() {
+$(document).ready(function () {
   // Create a variable to reference the database.
   database = firebase.database();
+
+  ////////////////////////////////////////////////////////////////////
+  // KRISTAL's Favor Button
+  $(".table-book-image").on("click", function (event) {
+    event.preventDefault();
+
+    // var favorid = $(this).attr(".table-book-image");
+
+    if (firebase.auth().currentUser !== null)
+      console.log("user id: " + firebase.auth().currentUser.uid);
+
+    // var userid = firebase.auth().currentUser.uid;
+    var userid = "test-again";
+
+    database.ref("/" + userid + "/favorite").push({
+      favorite: "book-image",
+      bookName: $(this).attr("src")
+      // bookAuthor: "row book-title",
+      // bookImageLink: $(this).attr(".book-image", ),
+      // bookSellerLink: ""
+    })
+  });
+
+  // function favoriteBook() {
+  //   // $(".book-row").on("click", function (event) {
+  //   //   event.preventDefault();
+
+
+  //   // var favorid = $(this).attr(".table-book-image");
+
+  //   if (firebase.auth().currentUser !== null)
+  //     console.log("user id: " + firebase.auth().currentUser.uid);
+
+  //   // var userid = firebase.auth().currentUser.uid;
+  //   var userid = "test-again";
+
+  //   // var bookName = 'vitaliy';
+  //   var bookName = $(this).attr("src");
+  //   console.log('bookName: ', bookName);
+  //   // var author =
+  //   // var bookCoverLink =
+  //   // var bookSellerLink
+
+  //   database.ref("/" + userid + "/favorite").push({
+  //     favorite: bookName,
+  //     favorite2: bookName
+  //     // name: bookName
+  //     // bookAuthor: "row book-title",
+  //     // bookImageLink: $(this).attr(".book-image", ),
+  //     // bookSellerLink: ""
+  //   })
+  //   // });
+  //   console.log('!!!!------clicked-image (this): ', (this));
+  // }
+
+
+  $(".book-row").on("click", function (event) {
+    event.preventDefault();
+
+
+    // var favorid = $(this).attr(".table-book-image");
+
+    if (firebase.auth().currentUser !== null)
+      console.log("user id: " + firebase.auth().currentUser.uid);
+
+    // var userid = firebase.auth().currentUser.uid;
+    var userid = "test-again";
+
+    // var bookName = 'vitaliy';
+    var bookName = $(this).attr("src");
+    console.log('bookName: ', bookName);
+    // var author =
+    // var bookCoverLink =
+    // var bookSellerLink
+
+    database.ref("/" + userid + "/favorite").push({
+      favorite: bookName,
+      favorite2: bookName
+      // name: bookName
+      // bookAuthor: "row book-title",
+      // bookImageLink: $(this).attr(".book-image", ),
+      // bookSellerLink: ""
+    })
+    console.log('!!!!------clicked-image (this): ', (this));
+  });
+
+  ////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////
+  // PATRICK'S WORK - SIGN UP & SIGN-IN 
+
+  // $(document).ready(function () {
+  //   // Create a variable to reference the database.
+  //   database = firebase.database();
 
   // FirebaseUI config.
   var uiConfig = {
@@ -478,31 +597,75 @@ $(document).ready(function() {
     ],
   };
 
-  // // Initialize the FirebaseUI Widget using Firebase.
+  // Initialize the FirebaseUI Widget using Firebase.
   var ui = new firebaseui.auth.AuthUI(firebase.auth());
-  // // The start method will wait until the DOM is loaded.
+  // The start method will wait until the DOM is loaded.
   ui.start('#firebaseui-auth-container', uiConfig);
 
-  firebase.auth().onAuthStateChanged(function(user) {
+
+
+  // VITALIY'S AUTHENTICATION PERSISTENCE CODE = DEFAULT PERSISTENCE IS LOCAL => USER MUST SIGN OUT TO CHANGE STATE
+  // VITALIY'S CODE TO CHECK FOR CURRENT FIREBASE USER
+  var user = firebase.auth().currentUser;
+
+  if (user) {
+    // User is signed in.
+    console.log('CURRENT USER (signed-in): ', user);
+    console.log('user.displayName: ', user.displayName);
+    $('#navbarDropdown').text(user.displayName);
+    $('#sign-in-button').hide();
+    $('#member-dropdown').show();
+
+  } else {
+    // No user is signed in.
+    console.log('CURRENT USER (signed-out): ', user);
+    $('#member-dropdown').hide();
+    $('#sign-in-button').show();
+  }
+
+
+  // SIGN-IN/OUT ACTIONS
+  firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       // User is signed in.
-      $('#member-dropdown').removeAttr('style');
-      console.log('user.displayName', user.displayName);
+      console.log('user.displayName: ', user.displayName);
       $('#navbarDropdown').text(user.displayName);
+      $('#sign-in-button').hide();
+      $('#member-dropdown').show();
 
     } else {
       // No user is signed in.
+      console.log('CURRENT USER (signed-out): ', user);
+      $('#member-dropdown').hide();
+      $('#sign-in-button').show();
     }
   });
 
-// PATRICK's signout button 
-  firebase.auth().signOut().then(function() {
-    // Sign-out successful.
-  }).catch(function(error) {
-    // An error happened.
+
+  // PATRICK's signout button 
+  $('#sign-out-dropdown').on("click", function (event) {
+    event.preventDefault();
+
+    firebase.auth().signOut().then(function () {
+      // Sign-out successful.
+      console.log("USER SIGNED OUT!..¯\_(ツ)_/¯ ")
+      console.log('user.displayName: ', user.displayName);
+      $('#navbarDropdown').text('');
+      $('#sign-in-button').show();
+      $('#member-dropdown').hide();
+
+    })
+      .catch(function (error) {
+        // An error happened.
+        console.log('If user.displayName below is not NULL ...');
+        console.log("USER DID NOT SIGN OUT")
+      });
+    console.log('user.displayName: ', user.displayName);
   });
 
-  });
+
+
+});
 
 
 
