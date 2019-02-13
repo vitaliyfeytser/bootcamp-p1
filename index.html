@@ -32,19 +32,19 @@
                     <a class="nav-link" href="#">Member<span class="sr-only">(current)</span></a>
                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="./sign-in.html" data-toggle="modal"
-                        data-target="#exampleModal">Sign-Up/In</a>
+                    <a id="sign-in-button" class="nav-link" data-toggle="modal" data-target="#exampleModal">Sign-Up or
+                        Log-In</a>
                 </li>
-                <li id="member-dropdown" class="nav-item dropdown" style="display:none">
+                <li id="member-dropdown" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Member
+
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Invite a Friend</a>
+                        <!-- <a class="dropdown-item" href="#">Another action</a> -->
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="">Sign Out</a>
+                        <a id="sign-out-dropdown" class="dropdown-item" href="">Sign Out</a>
                     </div>
                 </li>
             </ul>
@@ -54,15 +54,15 @@
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <div class="modal-content" id="firebaseui-auth-container">
+                    <div class="modal-content" id="sign-in-modal">
                         <!-- <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Sign-up or sign-in with your credentials:</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div>
-                        <div class="modal-body" >
                         </div> -->
+                        <div class="modal-body" id="firebaseui-auth-container">
+                        </div>
                         <!-- <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary">Save changes</button>
@@ -126,8 +126,9 @@
                             </div>
                             <div class="col-9 author-box">
                                 <div class="container">
+
                                     <div class="row">
-                                        <h3 id="today-top">TODAY'S TOP AUTHOR</h3>
+                                        <h3 id="today-top">SELECT TOP AUTHOR</h3>
                                     </div>
                                     <div class="row">
                                         <h1 id="author-name">Brandon Sanderson</h1>
@@ -142,9 +143,6 @@
                                         </p>
                                     </div>
 
-                                    <div class="row author-bio">
-                                        (Search-by-author will populate the image and text areas here.)
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -224,53 +222,166 @@
             </div> -->
 
         </div>
-
-        <!-- COMPLETE WORKS CONTAINER -->
-
-        <div id="complete-works-title">Author's Complete Works:</div>
-
-        <table class="table table-sm table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Cover</th>
-                    <th scope="col">Book</th>
-                    <th scope="col">Date Published</th>
-                    <th scope="col">Rating</th>
-                </tr>
-            </thead>
-            <tbody id="books-table">
-                <tr>
-                    <th scope="row">1</th>
-                    <td><img class="table-book-image" src="assets/images/Way.jpg"></td>
-                    <td class="table-book-name">The Way of Kings</td>
-                    <td>August 31, 2010</td>
-                    <td class="last-column"><img class="table-rating-image" src="assets/images/Star_rating_4_of_5.png">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td><img class="table-book-image" src="assets/images/Words.jpg"></td>
-                    <td>Words of Radiance</td>
-                    <td>March 14, 2014</td>
-                    <td class="last-column"><img class="table-rating-image" src="assets/images/Star_rating_3_of_5.png">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td><img class="table-book-image" src="assets/images/Words.jpg"></td>
-                    <td>Oathbringer</td>
-                    <td>November 14, 2017</td>
-                    <td class="last-column"><img class="table-rating-image" src="assets/images/Star_rating_5_of_5.png">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
     </div>
 
 
-    <!-- Bootstrap Java and jQuery links -->
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+
+                <!-- STAFF FAVORITES -->
+
+                <div class="complete-works-title">Staff Favorites</div>
+
+                <table class="table table-sm table-hover side-table">
+                    <thead>
+                        <tr>
+                            <!-- <th scope="col">#</th> -->
+                            <th scope="col"><img class="table-book-image" src="assets/images/author-brandon-sanderson.jpg"></th>
+                            <th scope="col">Brandon Sanderson</th>
+                            <!-- <th scope="col">Date Published</th> -->
+                            <!-- <th scope="col">Rating</th> -->
+                        </tr>
+                    </thead>
+                    <tbody id="books-table">
+                        <tr>
+                            <!-- <th scope="row">1</th> -->
+                            <td><img class="table-book-image" src="assets/images/Way.jpg"></td>
+                            <td class="table-book-name">The Way of Kings</td>
+                            <!-- <td>August 31, 2010</td>
+                            <td class="last-column"><img class="table-rating-image"
+                                    src="assets/images/Star_rating_4_of_5.png">
+                            </td> -->
+                        </tr>
+                        <tr>
+                            <!-- <th scope="row">2</th> -->
+                            <td><img class="table-book-image" src="assets/images/Words.jpg"></td>
+                            <td>Words of Radiance</td>
+                            <!-- <td>March 14, 2014</td>
+                            <td class="last-column"><img class="table-rating-image"
+                                    src="assets/images/Star_rating_3_of_5.png">
+                            </td> -->
+                        </tr>
+                        <tr>
+                            <!-- <th scope="row">3</th> -->
+                            <td><img class="table-book-image" src="assets/images/Words.jpg"></td>
+                            <td>Oathbringer</td>
+                            <!-- <td>November 14, 2017</td>
+                            <td class="last-column"><img class="table-rating-image"
+                                    src="assets/images/Star_rating_5_of_5.png">
+                            </td> -->
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+            <div class="col-8">
+
+                <!-- COMPLETE WORKS CONTAINER -->
+
+                <div class="complete-works-title">Author's Complete Works</div>
+
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Cover</th>
+                            <th scope="col">Book</th>
+                            <th scope="col">Date Published</th>
+                            <th scope="col">Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody id="books-table">
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><img class="table-book-image" src="assets/images/Way.jpg"></td>
+                            <td class="table-book-name">The Way of Kings</td>
+                            <td>August 31, 2010</td>
+                            <td class="last-column"><img class="table-rating-image"
+                                    src="assets/images/Star_rating_4_of_5.png">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td><img class="table-book-image" src="assets/images/Words.jpg"></td>
+                            <td>Words of Radiance</td>
+                            <td>March 14, 2014</td>
+                            <td class="last-column"><img class="table-rating-image"
+                                    src="assets/images/Star_rating_3_of_5.png">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td><img class="table-book-image" src="assets/images/Words.jpg"></td>
+                            <td>Oathbringer</td>
+                            <td>November 14, 2017</td>
+                            <td class="last-column"><img class="table-rating-image"
+                                    src="assets/images/Star_rating_5_of_5.png">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+            <div class="col-2">
+
+
+                <!-- USER FAVORITES CONTAINER -->
+
+                <div class="complete-works-title">Your Favorites</div>
+
+                <table class="table table-sm table-hover side-table">
+                    <thead>
+                        <tr>
+                            <!-- <th scope="col">#</th> -->
+                            <!-- <th scope="col">Cover</th> -->
+                            <!-- <th scope="col">Book</th> -->
+                            <!-- <th scope="col">Date Published</th> -->
+                            <!-- <th scope="col">Rating</th> -->
+                        </tr>
+                    </thead>
+                    <tbody id="books-table">
+                        <tr>
+                            <!-- <th scope="row">1</th> -->
+                            <td><img class="table-book-image" src="assets/images/Way.jpg"></td>
+                            <td class="table-book-name">The Way of Kings</td>
+                            <!-- <td>August 31, 2010</td> -->
+                            <!-- <td class="last-column"><img class="table-rating-image"
+                                    src="assets/images/Star_rating_4_of_5.png">
+                            </td> -->
+                        </tr>
+                        <tr>
+                            <!-- <th scope="row">2</th> -->
+                            <td><img class="table-book-image" src="assets/images/Words.jpg"></td>
+                            <td>Words of Radiance</td>
+                            <!-- <td>March 14, 2014</td>
+                            <td class="last-column"><img class="table-rating-image"
+                                    src="assets/images/Star_rating_3_of_5.png">
+                            </td> -->
+                        </tr>
+                        <tr>
+                            <!-- <th scope="row">3</th> -->
+                            <td><img class="table-book-image" src="assets/images/Words.jpg"></td>
+                            <td>Oathbringer</td>
+                            <!-- <td>November 14, 2017</td>
+                            <td class="last-column"><img class="table-rating-image"
+                                    src="assets/images/Star_rating_5_of_5.png">
+                            </td> -->
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Bootstrap Javascript and jQuery links -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
