@@ -294,11 +294,12 @@ function populateBooks() {
             }).append(
             ),
             // FAVORITE BUTTON /////////////////////////////////////////////////////////
-            // LINK DIV FOR E-BOOK BUTTON
+            // DIV FOR FAVORITE BUTTON
             $('<div class="col">').append(
               $('<img>', {
                 class: 'favorite-button',
-                src: "./assets/images/favorite-heart-blank.png"
+                src: "./assets/images/favorite-heart-blank.png",
+                value: i
               }),
 
               // LINK DIV FOR E-BOOK BUTTON
@@ -334,7 +335,8 @@ function populateBooks() {
             // FAVORITE BUTTON /////////////////////////////////////////////////////////////
             $('<img>', {
               class: 'favorite-button',
-              src: "./assets/images/favorite-heart-red.png"
+              src: "./assets/images/favorite-heart-red.png",
+              value: i
             }).append(
             )
           )),
@@ -538,26 +540,149 @@ $(document).ready(function () {
   database = firebase.database();
 
   ////////////////////////////////////////////////////////////////////
+  // VITALIY's Favor Button
+
+      // Initial Values
+      var likeBtnVal = '';
+
+      var bookName = '';
+      var author = '';
+      var coverLink = '';
+
+      // Capture Button Click
+      $('.favorite-button').on('click', function(event) {
+        event.preventDefault();
+
+        // YOUR TASK!!!
+        // Code in the logic for storing and retrieving the most recent user.
+        // Don't forget to provide initial data to your Firebase database.
+        likeBtnVal = $(this).getAttr('value')
+        console.log('likeBtnVal: ', likeBtnVal);
+        console.log('likeBtnVal (this): ', (this));
+          // .val()
+          // .trim();
+
+        bookName = bookURL[i].volumeInfo.title
+          .val()
+          .trim();
+        author = bookURL[i].volumeInfo.title
+          .val()
+          .trim();
+        coverLink = bookURL[likeBtnVal].volumeInfo.imageLinks.thumbnail
+          .val()
+          .trim();
+
+        // Code for the push
+        dataRef.ref().push({
+          bookName: bookName,
+          author: author,
+          coverLink: coverLink,
+          dateAdded: firebase.database.ServerValue.TIMESTAMP,
+        });
+      });
+
+      // Firebase watcher + initial loader HINT: This code behaves similarly to .on("value")
+      dataRef.ref().on(
+        'child_added',
+        function(leoSnapShot) {
+          // Log everything that's coming out of snapshot
+
+          console.log(leoSnapShot.val());
+          // console.log(leoSnapShot.val().name);
+          // console.log(leoSnapShot.val().name);
+          // console.log(leoSnapShot.val().email);
+          // console.log(leoSnapShot.val().age);
+          // console.log(leoSnapShot.val().comment);
+          // console.log(leoSnapShot.val().joinDate);
+
+          // full list of items to the well
+          $('#full-member-list').append(
+            "<div class='well'><span class='member-name'> " +
+              leoSnapShot.val().bookName +
+              " </span><span class='member-email'> " +
+              leoSnapShot.val().author +
+              " </span><span class='member-age'> " +
+              leoSnapShot.val().coverLink +
+              " </span><span class='member-comment'> " +
+              leoSnapShot.val().dateAdded +
+              ' </span></div>'
+          );
+
+          // Handle the errors
+        },
+        function(errorObject) {
+          console.log('Errors handled: ' + errorObject.code);
+        }
+      );
+
+      dataRef
+        .ref()
+        .orderByChild('dateAdded')
+        .limitToLast(1)
+        .on('child_added', function(snapshot) {
+          // Change the HTML to reflect
+          $('#name-display').text(snapshot.val().bookName);
+          $('#email-display').text(snapshot.val().author);
+          $('#age-display').text(snapshot.val().age);
+          $('#comment-display').text(snapshot.val().coverLink);
+        });
+
+  ////////////////////////////////////////////////////////////////////
   // KRISTAL's Favor Button
-  $(".table-book-image").on("click", function (event) {
-    event.preventDefault();
 
-    // var favorid = $(this).attr(".table-book-image");
+  // $(".table-book-image").on("click", function (event) {
+  //   event.preventDefault();
+  
+  //   // var favorid = $(this).attr(".table-book-image");
+  
+  //   if (firebase.auth().currentUser !== null)
+  //     console.log("user id: " + firebase.auth().currentUser.uid);
+  
+  //    var userid = "test";
+  //    var name = $("#firebase-favs").val()
 
-    if (firebase.auth().currentUser !== null)
-      console.log("user id: " + firebase.auth().currentUser.uid);
+  
+  //    database.ref("/" + userid + "/favorite").push({
+  //     favorite: "row book-title"
+  //   })
+  // });
+  
+  // database.ref().on(
+  //   "childAdded",
+  //   function(dbBook){
+  //       var dbObj = dbBook.val();
+  
+  //       var newRow = $("<tr>")
+  //       newRow.append($("<td>" + dbObj.name-  + "</td>"));
+  
+  //       $("#user-favs-table").append(newRow);
+  //   },
+  // )
 
-    // var userid = firebase.auth().currentUser.uid;
-    var userid = "test-again";
 
-    database.ref("/" + userid + "/favorite").push({
-      favorite: "book-image",
-      bookName: $(this).attr("src")
-      // bookAuthor: "row book-title",
-      // bookImageLink: $(this).attr(".book-image", ),
-      // bookSellerLink: ""
-    })
-  });
+  ////////////////////////////////////////////////
+
+  // $(".table-book-image").on("click", function (event) {
+  //   event.preventDefault();
+
+  //   // var favorid = $(this).attr(".table-book-image");
+
+  //   if (firebase.auth().currentUser !== null)
+  //     console.log("user id: " + firebase.auth().currentUser.uid);
+
+  //   // var userid = firebase.auth().currentUser.uid;
+  //   var userid = "test-again";
+
+  //   database.ref("/" + userid + "/favorite").push({
+  //     favorite: "book-image",
+  //     bookName: $(this).attr("src")
+  //     // bookAuthor: "row book-title",
+  //     // bookImageLink: $(this).attr(".book-image", ),
+  //     // bookSellerLink: ""
+  //   })
+  // });
+
+  ///////////////////////////////////////////////
 
   // function favoriteBook() {
   //   // $(".book-row").on("click", function (event) {

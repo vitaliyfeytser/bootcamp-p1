@@ -237,13 +237,14 @@
                     <thead>
                         <tr>
                             <!-- <th scope="col">#</th> -->
-                            <th scope="col"><img class="table-book-image" src="assets/images/author-brandon-sanderson.jpg"></th>
+                            <th scope="col"><img class="table-book-image"
+                                    src="assets/images/author-brandon-sanderson.jpg"></th>
                             <th scope="col">Brandon Sanderson</th>
                             <!-- <th scope="col">Date Published</th> -->
                             <!-- <th scope="col">Rating</th> -->
                         </tr>
                     </thead>
-                    <tbody id="books-table">
+                    <tbody id="staff-favs-table">
                         <tr>
                             <!-- <th scope="row">1</th> -->
                             <td><img class="table-book-image" src="assets/images/Way.jpg"></td>
@@ -342,7 +343,7 @@
                             <!-- <th scope="col">Rating</th> -->
                         </tr>
                     </thead>
-                    <tbody id="books-table">
+                    <tbody id="user-favs-table">
                         <tr>
                             <!-- <th scope="row">1</th> -->
                             <td><img class="table-book-image" src="assets/images/Way.jpg"></td>
@@ -375,6 +376,30 @@
 
 
             </div>
+
+            <!-- Most Recent Member Card -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">Most Recent Member</div>
+                    <div class="card-body" id="recent-member">
+                        <h2 id="name-display"></h2>
+                        <h4 id="email-display"></h4>
+                        <h4 id="age-display"></h4>
+                        <p id="comment-display"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wells for displaying all users -->
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">All Members</div>
+                    <div class="card-body">
+                        <div id="full-member-list"></div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
