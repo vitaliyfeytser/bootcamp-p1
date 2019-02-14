@@ -48,19 +48,19 @@ var authors = [
         type: "Book",
         bookName: "Words of Radiance",
         coverLink: "https://upload.wikimedia.org/wikipedia/en/e/e0/WordsOfRadianceCover.png",
-        sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
+        sellerLink: "https://smile.amazon.com/Words-Radiance-Stormlight-Archive-Book/dp/B00HWDEFMW/ref=sr_1_1?ie=UTF8&qid=1550062168&sr=8-1&keywords=words+of+radiance+by+brandon+sanderson"
       },
       {
         type: "Book",
         bookName: "Oathbringer",
         coverLink: "https://upload.wikimedia.org/wikipedia/en/5/5d/Brandon_Sanderson_Oathbringer_book_cover.jpg",
-        sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
+        sellerLink: "https://smile.amazon.com/Oathbringer/dp/B071V7W5S1/ref=sr_1_1?ie=UTF8&qid=1550062263&sr=1-1&keywords=oathbringer+by+brandon+sanderson"
       },
       {
         type: "Book",
         bookName: "Mistborn: The Final Empire",
         coverLink: "https://upload.wikimedia.org/wikipedia/en/4/44/Mistborn-cover.jpg",
-        sellerLink: "https://smile.amazon.com/Way-Kings-Book-Stormlight-Archive/dp/B0041JKFJW/ref=sr_1_2?ie=UTF8&qid=1549425753&sr=8-2&keywords=The+way+of+kings"
+        sellerLink: "https://smile.amazon.com/Final-Empire-Mistborn-Book/dp/B001QKBHG4/ref=sr_1_1?ie=UTF8&qid=1550062319&sr=1-1&keywords=Mistborn%3A+The+Final+Empire+by+brandon+sanderson"
       }
     ]
   },
@@ -103,7 +103,7 @@ var authors = [
     firstName: "Robert",
     lastName: "Jordan",
     fullName: "Robert Jordan",
-    image: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Tolkien_1916.jpg",
+    image: "https://upload.wikimedia.org/wikipedia/commons/e/ea/Robert_Jordan.jpg",
     caption: "James Oliver Rigney Jr. (October 17, 1948 – September 16, 2007), better known by his pen name Robert Jordan,[1] was an American author of epic fantasy. He is best known for the Wheel of Time series, which comprises 14 books and a prequel novel. He is one of several writers to have written original Conan the Barbarian novels; his are highly acclaimed to this day.",
     bibliography: [
       {
@@ -207,9 +207,11 @@ var authors = [
   //Tyler's code here... for dynamic images
   //First, it loads the intial "author spotlight:"
 
-  var authorSpotlightList = ["J.R.R. Tolkien", "Brandon Sanderson", "Arthur Conan Doyle", "J.K. Rowling", "Timothy Zahn"];
-  var authorSpotlight = authors[Math.floor(Math.random()*5)].fullName;
-  console.log(authorSpotlight);
+
+var authorSpotlightList = ["J.R.R. Tolkien", "Brandon Sanderson", "Alastair Reynolds", "J.K. Rowling", "Timothy Zahn"];
+var authorSpotlight = authorSpotlightList[Math.floor(Math.random() * 5)];
+console.log(authorSpotlight);
+
 
   $.ajaxPrefilter(function (options) {
     if (options.crossDomain && jQuery.support.cors) {
@@ -255,33 +257,28 @@ function populateBooks() {
             // onclick: 'favoriteBook()',
             // data_cover: bookURL[i].volumeInfo.imageLinks.thumbnail
           }).append(
-          )
-        )),
-      $('<div>', { class: 'row book-title' }).append(
-        $('<h5>').text(bookURL[i].volumeInfo.title).append(
-        //   .attr({
-        //     target:"nw", 
-        //     title:"Opens in a new window"
-        // });
-          $('<a>').attr({
-            href: bookURL[i].saleInfo.buyLink,
-            target: "_blank" }).append(
-            // 4 LARGE BOOK IMAGES AT TOP - AUTHOR SPOTLIGH
-            $('<img>', {
-              // onclick: 'favoriteBook()',
-              class: 'book-image',
-              src: bookURL[i].volumeInfo.imageLinks.thumbnail
-              // 'data-author': bookURL[i].volumeInfo.auhtors[0]
+            // 4 LARGE BOOK IMAGES AT TOP - AUTHOR SPOTLIGHT
+            // book covers are made interactive - link explores purchase options
+            $('<a>', {
+              href: bookURL[i].volumeInfo.infoLink,
+              style: "text-decoration: none",
+              target: "_blank"
             }).append(
-            ),
+              $('<img>', {
+                // onclick: 'favoriteBook()',
+                class: 'book-image',
+                src: bookURL[i].volumeInfo.imageLinks.thumbnail
+                // 'data-author': bookURL[i].volumeInfo.auhtors[0]
+              })),
             // FAVORITE BUTTON /////////////////////////////////////////////////////////
-            // LINK DIV FOR E-BOOK BUTTON
+            // DIV FOR FAVORITE BUTTON
             $('<div class="col">').append(
               $('<img>', {
                 class: 'favorite-button',
-                src: "./assets/images/favorite-heart-blank.png"
+                src: "./assets/images/favorite-heart-red.png",
+                // this value setting is helping track the favorite button's association with the index of the volumeInfo of the current bookURL object
+                value: i
               }),
-
               // LINK DIV FOR E-BOOK BUTTON
               $('<a>', {
                 href: bookURL[i].saleInfo.buyLink,
@@ -290,45 +287,54 @@ function populateBooks() {
                 // E-BOOK BUTTON IMAGE
                 $('<img>', {
                   id: 'eBook-image',
-                  src: "./assets/images/ebook4.png"
+                  src: "./assets/images/rect-ebook.png"
                 })
               )
             ),
           )),
+
+        $('<div>', { class: 'container' }).append(
+          $('<div>', { class: 'row book-title' }).append(
+            // BOOK TITLE
+            $('<h5>').text(bookURL[i].volumeInfo.title)
+          ))).appendTo('#popular-book-container');
+      // THIS CREATES BOOKs WITHOUT E-BOOK TAG
+
         $('<div>', { class: 'row book-title' }).append(
           // BOOK TITLE
           $('<h5>').text(bookURL[i].volumeInfo.title).append(
 
           )
         )
-
       ).appendTo('#popular-book-container');
       // THIS CREATES BOOK WITHOUT E-BOOK TAG
+
     } else {
       $('<div>', { class: 'col-3 book' }).append(
         $('<div>', { class: 'container' }).append(
           $('<div>', { class: 'row book-row' }).append(
-            $('<img>', {
-              class: 'book-image',
-              src: bookURL[i].volumeInfo.imageLinks.thumbnail
+            $('<a>', {
+              href: bookURL[i].volumeInfo.infoLink,
+              style: "text-decoration: none",
+              target: "_blank"
             }).append(
-            ),
+              $('<img>', {
+                class: 'book-image',
+                src: bookURL[i].volumeInfo.imageLinks.thumbnail
+              })),
             // FAVORITE BUTTON /////////////////////////////////////////////////////////////
-            $('<img>', {
-              class: 'favorite-button',
-              src: "./assets/images/favorite-heart-red.png"
-            }).append(
-            )
-          )),
-        $('<div>', { class: 'row book-title' }).append(
-          $('<h5>').text(bookURL[i].volumeInfo.title).append(
-            //$('<a>').attr("href", bookURL[i].saleInfo.buyLink).append(
-              // $('<img>', {
-              //   id: 'eBook-image',
-              //   src: "./assets/images/eBook3.png"
-              // }).attr("href", bookURL[i].saleInfo.buyLink)
-            //)
-          //)
+
+            $('<div class="col">').append(
+              $('<img>', {
+                class: 'favorite-button',
+                src: "./assets/images/favorite-heart-blank.png",
+                value: i
+              })
+            ))),
+        $('<div>', { class: 'container' }).append(
+          $('<div>', { class: 'row book-title' }).append(
+            $('<h5>').text(bookURL[i].volumeInfo.title)
+          )
         )
       ).appendTo('#popular-book-container');
     }
@@ -336,6 +342,104 @@ function populateBooks() {
   };
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////
+// THIS CODE GENERATES THE BOOKS-FOUND TABLE
+var bookStars = '';
+
+function booksFound() {
+  // Empty books-found table before displaying new info
+  $('#books-table').empty();
+
+  // LOOP THROUGH booksURL variable for volume info and create the books-found table rows
+  for (i = 0; i < 25; i++) {
+
+    // declared variable for eBook icon
+    var ebookImage = '';
+    // logic for skipping books without eBook links
+    if (bookURL[i].saleInfo.saleability == "FOR_SALE") {
+      ebookImage = "./assets/images/rect-ebook.png";
+    } else {
+      ebookImage = "./assets/images/rect-ebook-blank.png";
+    }
+
+    $('<tr>').append(
+      $('<th>', {
+        scope: 'row',
+        text: i + 1
+      }
+      ),
+      $('<td>').append(
+        $('<a>', {
+          href: bookURL[i].volumeInfo.infoLink,
+          style: "text-decoration: none",
+          target: "_blank"
+        }).append(
+          $('<img>', {
+            class: 'table-book-image',
+            src: bookURL[i].volumeInfo.imageLinks.thumbnail
+          }),
+        )),
+      $('<td>').append(
+        // LINK DIV FOR E-BOOK BUTTON
+        $('<a>', {
+          href: bookURL[i].saleInfo.buyLink,
+          target: "_blank",
+        }).append(
+          // E-BOOK BUTTON IMAGE
+          $('<img>', {
+            id: 'eBook-image',
+            src: ebookImage
+          })
+        )
+      ),
+      $('<td>', {
+        class: 'table-book-name',
+        text: bookURL[i].volumeInfo.title
+      }),
+      $('<td>', {
+        text: bookURL[i].volumeInfo.publishedDate
+      }),
+      $('<td>', {
+        class: 'last-column'
+      }).append(
+        $('<img>', {
+          class: 'table-rating-image',
+          src: bookStars
+        }),
+      ),
+    ).appendTo('#books-table');
+
+
+    // BOOK RATINGS ARE DONE HERE
+    // bookRating variable is taking care of errors where bookrating does not exist - sets it to zero
+    var bookRating = bookURL[i].volumeInfo.averageRating;
+    if (bookRating === undefined) {
+      bookRating = 0;
+    }
+    console.log('bookRating: ', bookRating);
+    // evaluating rating for the appropriate star-rating image 
+    if (bookRating >= 0 && bookRating < 0.5) {
+      bookStars = 'assets/images/Star_rating_0_of_5.png';
+
+    } else if (bookRating >= 0.5 && bookRating < 1.5) {
+      bookStars = 'assets/images/Star_rating_1_of_5.png';
+
+    } else if (bookRating >= 1.5 && bookRating < 2.5) {
+      bookStars = 'assets/images/Star_rating_2_of_5.png';
+
+    } else if (bookRating >= 2.5 && bookRating < 3.5) {
+      bookStars = 'assets/images/Star_rating_3_of_5.png';
+
+    } else if (bookRating >= 2.5 && bookRating < 4.5) {
+      bookStars = 'assets/images/Star_rating_4_of_5.png';
+
+    } else if (bookRating >= 4.5 && bookRating <= 5) {
+      bookStars = 'assets/images/Star_rating_5_of_5.png';
+    }
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////
 
 // On-click event listener for the 'Search' button
 $("#search-button").on("click", function (event) {
@@ -366,6 +470,7 @@ $("#search-button").on("click", function (event) {
       console.log(response);
       bookURL = response.items;
       populateBooks();
+      booksFound();
       console.log('bookURL: ', bookURL);
       $("#author-image").attr('src', bookURL[0].volumeInfo.imageLinks.thumbnail);
       $('#today-top').text("Looking for a good read? Check out our Author Spotlight!");
@@ -406,16 +511,16 @@ $("#search-button").on("click", function (event) {
     console.log(response);
     bookURL = response.items;
     populateBooks();
+    booksFound();
     //The clearing below is necessary so if the user wants a new search, the old search info doesn't interfere
     searchByAuthor = '';
     searchByBook = '';
   });
-
   }
 });
 
 
-//Kristal's API for Wiki media for the image and boi. 
+//Kristal's API for Wiki media for the image and bio. 
 // Function calling the API Author Search
 function getAuthorInfo(authorSearch) {
   $.ajax({
@@ -493,26 +598,149 @@ $(document).ready(function () {
   database = firebase.database();
 
   ////////////////////////////////////////////////////////////////////
+  // VITALIY's Favor Button
+
+  // // Initial Values
+  // var likeBtnVal = '';
+
+  // var bookName = '';
+  // var author = '';
+  // var coverLink = '';
+
+  // // Capture Button Click
+  // $('.favorite-button').on('click', function (event) {
+  //   event.preventDefault();
+
+  //   // YOUR TASK!!!
+  //   // Code in the logic for storing and retrieving the most recent user.
+  //   // Don't forget to provide initial data to your Firebase database.
+  //   likeBtnVal = $(this).getAttr('value')
+  //   console.log('likeBtnVal: ', likeBtnVal);
+  //   console.log('likeBtnVal (this): ', (this));
+  //   // .val()
+  //   // .trim();
+
+  //   bookName = bookURL[i].volumeInfo.title
+  //     .val()
+  //     .trim();
+  //   author = bookURL[i].volumeInfo.title
+  //     .val()
+  //     .trim();
+  //   coverLink = bookURL[likeBtnVal].volumeInfo.imageLinks.thumbnail
+  //     .val()
+  //     .trim();
+
+  //   // Code for the push
+  //   dataRef.ref().push({
+  //     bookName: bookName,
+  //     author: author,
+  //     coverLink: coverLink,
+  //     dateAdded: firebase.database.ServerValue.TIMESTAMP,
+  //   });
+  // });
+
+  // // Firebase watcher + initial loader HINT: This code behaves similarly to .on("value")
+  // dataRef.ref().on(
+  //   'child_added',
+  //   function (leoSnapShot) {
+  //     // Log everything that's coming out of snapshot
+
+  //     console.log(leoSnapShot.val());
+  //     // console.log(leoSnapShot.val().name);
+  //     // console.log(leoSnapShot.val().name);
+  //     // console.log(leoSnapShot.val().email);
+  //     // console.log(leoSnapShot.val().age);
+  //     // console.log(leoSnapShot.val().comment);
+  //     // console.log(leoSnapShot.val().joinDate);
+
+  //     // full list of items to the well
+  //     $('#full-member-list').append(
+  //       "<div class='well'><span class='member-name'> " +
+  //       leoSnapShot.val().bookName +
+  //       " </span><span class='member-email'> " +
+  //       leoSnapShot.val().author +
+  //       " </span><span class='member-age'> " +
+  //       leoSnapShot.val().coverLink +
+  //       " </span><span class='member-comment'> " +
+  //       leoSnapShot.val().dateAdded +
+  //       ' </span></div>'
+  //     );
+
+  //     // Handle the errors
+  //   },
+  //   function (errorObject) {
+  //     console.log('Errors handled: ' + errorObject.code);
+  //   }
+  // );
+
+  // dataRef
+  //   .ref()
+  //   .orderByChild('dateAdded')
+  //   .limitToLast(1)
+  //   .on('child_added', function (snapshot) {
+  //     // Change the HTML to reflect
+  //     $('#name-display').text(snapshot.val().bookName);
+  //     $('#email-display').text(snapshot.val().author);
+  //     $('#age-display').text(snapshot.val().age);
+  //     $('#comment-display').text(snapshot.val().coverLink);
+  //   });
+
+  ////////////////////////////////////////////////////////////////////
   // KRISTAL's Favor Button
-  $(".table-book-image").on("click", function (event) {
-    event.preventDefault();
 
-    // var favorid = $(this).attr(".table-book-image");
+  // $(".table-book-image").on("click", function (event) {
+  //   event.preventDefault();
 
-    if (firebase.auth().currentUser !== null)
-      console.log("user id: " + firebase.auth().currentUser.uid);
+  //   // var favorid = $(this).attr(".table-book-image");
 
-    // var userid = firebase.auth().currentUser.uid;
-    var userid = "test-again";
+  //   if (firebase.auth().currentUser !== null)
+  //     console.log("user id: " + firebase.auth().currentUser.uid);
 
-    database.ref("/" + userid + "/favorite").push({
-      favorite: "book-image",
-      bookName: $(this).attr("src")
-      // bookAuthor: "row book-title",
-      // bookImageLink: $(this).attr(".book-image", ),
-      // bookSellerLink: ""
-    })
-  });
+  //    var userid = "test";
+  //    var name = $("#firebase-favs").val()
+
+
+  //    database.ref("/" + userid + "/favorite").push({
+  //     favorite: "row book-title"
+  //   })
+  // });
+
+  // database.ref().on(
+  //   "childAdded",
+  //   function(dbBook){
+  //       var dbObj = dbBook.val();
+
+  //       var newRow = $("<tr>")
+  //       newRow.append($("<td>" + dbObj.name-  + "</td>"));
+
+  //       $("#user-favs-table").append(newRow);
+  //   },
+  // )
+
+
+  ////////////////////////////////////////////////
+
+  // $(".table-book-image").on("click", function (event) {
+  //   event.preventDefault();
+
+  //   // var favorid = $(this).attr(".table-book-image");
+
+  //   if (firebase.auth().currentUser !== null)
+  //     console.log("user id: " + firebase.auth().currentUser.uid);
+
+  //   // var userid = firebase.auth().currentUser.uid;
+  //   var userid = "test-again";
+
+  //   database.ref("/" + userid + "/favorite").push({
+  //     favorite: "book-image",
+  //     bookName: $(this).attr("src")
+  //     // bookAuthor: "row book-title",
+  //     // bookImageLink: $(this).attr(".book-image", ),
+  //     // bookSellerLink: ""
+  //   })
+  // });
+
+  ///////////////////////////////////////////////
 
   // function favoriteBook() {
   //   // $(".book-row").on("click", function (event) {
