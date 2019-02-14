@@ -85,14 +85,32 @@ body {
     0 .075em 1.5em rgb(27, 27, 27);
 }
 
+#wikipedia-credit {
+    text-decoration: none;
+    font-size: 1.25vw;
+    text-shadow: 
+    -.05em -.05em 1.5em rgb(27, 27, 27),
+    .05em -.05em 1.5em rgb(27, 27, 27),
+    -.05em .05em 1.5em rgb(27, 27, 27),
+    .05em .05em 1.5em rgb(27, 27, 27),
+    -.075em 0 1.5em rgb(27, 27, 27),
+    .075em 0 1.5em rgb(27, 27, 27),
+    0 -.075em 1.5em rgb(27, 27, 27),
+    0 .075em 1.5em rgb(27, 27, 27);
+}
+
+
+#wikipedia-logo {
+    height: 2vw;
+}
 
 /* SEARCH RESULT & AUTHOR'S MOST POPULAR BOOKS */
 
-.container-main-content {
-    /* flex-flow: column wrap-reverse; */
+/* .container-main-content {
+    flex-flow: column wrap-reverse;
     align-items: flex-start;
     justify-content: space-between;
-}
+} */
 
 /* .container-author-works {
     flex-flow: column wrap-reverse;
@@ -125,6 +143,15 @@ body {
 
 /* COMPLETE WORKS TABLE */
 
+#google-books-logo {
+    height: 1.5vw;
+}
+
+#google-credit {
+    text-decoration: none;
+    font-size: 1.25vw;
+}
+
 .books-found-title {
     margin: 1em 0em;
     font-weight: bold;
@@ -132,33 +159,33 @@ body {
 
 .side-table {
     background-color: whitesmoke;
-    width: 10em;
+    /* width: 10em; */
 }
 
 .table-book-image {
     height: 5vw;
 }
 
-.last-column {
+/* .last-column {
     align-content: flex-end;
-}
+} */
 
 .table-rating-image {
     width: 5em;
 }
 
 #eBook-image {
-    height: 2em;
-    width: 2em;
-    margin-left: .5em;
+    height: 2vw;
+    /* width: 2em; */
+    margin: .5em;
     /* opacity: 0.5;
     filter: alpha(opacity=50); */
 }
 
 .favorite-button {
-    height: 2em;
-    width: 2em;
-    margin-left: .5em;
+    height: 2vw;
+    /* width: 2em; */
+    margin: .5em;
     /* opacity: 0.5;
     filter: alpha(opacity=50); */
 }
