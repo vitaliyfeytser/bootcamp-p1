@@ -212,6 +212,29 @@ var authorSpotlightList = ["J.R.R. Tolkien", "Brandon Sanderson", "Alastair Reyn
 var authorSpotlight = authorSpotlightList[Math.floor(Math.random() * 5)];
 console.log(authorSpotlight);
 
+$.ajaxPrefilter(function (options) {
+  if (options.crossDomain && jQuery.support.cors) {
+    var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+    options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+    //options.url = "http://cors.corsproxy.io/url=" + options.url;
+  }
+});
+var searchURL = "https://www.googleapis.com/books/v1/volumes?q=+inauthor:" + authorSpotlight + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
+
+$.ajax({
+  url: searchURL,
+  method: "GET"
+}).then(function (response) {
+  console.log(response);
+  $("#popular-title").text("Author Spotlight: " + authorSpotlight);
+  bookURL = response.items;
+  populateBooks();
+  console.log('bookURL: ', bookURL);
+});
+console.log('authors: ', authors);
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   $.ajaxPrefilter(function (options) {
     if (options.crossDomain && jQuery.support.cors) {
@@ -302,11 +325,9 @@ function populateBooks() {
 
         $('<div>', { class: 'row book-title' }).append(
           // BOOK TITLE
-          $('<h5>').text(bookURL[i].volumeInfo.title).append(
-
-          )
+          $('<h5>').text(bookURL[i].volumeInfo.title)
         )
-      ).appendTo('#popular-book-container');
+      // ).appendTo('#popular-book-container');
       // THIS CREATES BOOK WITHOUT E-BOOK TAG
 
     } else {
