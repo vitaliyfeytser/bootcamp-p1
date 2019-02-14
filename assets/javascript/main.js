@@ -451,7 +451,8 @@ $("#search-button").on("click", function (event) {
 
   //If the user clicks the button without entering search info, the if statement runs, and displays one of our pre-selected recommended authors
   if(searchByAuthor == "" && searchByBook == ""){
-    authorSpotlight = authors[Math.floor(Math.random()*5)].fullName; //randomly selects an author from the "authors" object above
+    var authorNumber = Math.floor(Math.random()*5);
+    authorSpotlight = authors[authorNumber].fullName; //randomly selects an author from the "authors" object above
     $("#popular-title").text("You did not enter search parameters. Here are some recommendations by " + authorSpotlight + ":");
 
     $.ajaxPrefilter(function (options) {
@@ -474,7 +475,7 @@ $("#search-button").on("click", function (event) {
       $("#author-image").attr('src', bookURL[0].volumeInfo.imageLinks.thumbnail);
       $('#today-top').text("Looking for a good read? Check out our Author Spotlight!");
       $('#author-name').text(authorSpotlight);
-
+      $('#bio-caption').text(authors[authorNumber].caption)
     }); 
     
 //This "else" is what runs if the user enters any search parameters.
