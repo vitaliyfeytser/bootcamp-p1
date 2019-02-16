@@ -203,21 +203,21 @@ var authors = [
 ];
 
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  //Tyler's code here... for dynamic images
-  //First, it loads the intial "author spotlight", by randomly selecting an author from the author object above
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//Tyler's code here... for dynamic images
+//First, it loads the intial "author spotlight", by randomly selecting an author from the author object above
 var authorSpotlightNumber = Math.floor(Math.random() * authors.length);
 var authorSpotlight = authors[authorSpotlightNumber].fullName;
 var authorNumber = Math.floor(Math.random() * authors.length);
 
-  function topAuthor(){
+function topAuthor() {
 
 
-    $("#author-image").attr('src', authors[authorNumber].image);
-    $('#today-top').text("Looking for a good read? Check out our Author Spotlight!");
-    $('#author-name').text(authors[authorNumber].fullName);
-    $('#bio-caption').text(authors[authorNumber].caption);
-  }
+  $("#author-image").attr('src', authors[authorNumber].image);
+  $('#today-top').text("Looking for a good read? Check out our Author Spotlight!");
+  $('#author-name').text(authors[authorNumber].fullName);
+  $('#bio-caption').text(authors[authorNumber].caption);
+}
 
 $.ajaxPrefilter(function (options) {
   if (options.crossDomain && jQuery.support.cors) {
@@ -236,12 +236,12 @@ $.ajax({
   $("#popular-title").text("Author Spotlight: " + authors[authorNumber].fullName);
   bookURL = response.items;
   populateBooks();
-  booksFound();
+  booksFoundTable();
 });
 
 
 
-  topAuthor();
+topAuthor();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //This function populates the four (or less) recommended books based on the search ran through google books api.
@@ -252,12 +252,9 @@ $.ajax({
 function populateBooks() {
   // Empty popular book div before displaying new info
   $('#popular-book-container').empty();
-  // for (i = 0; i < searchedAuthor.bibliography.length; i++) {
+
   for (i = 0; i < 4; i++) {
-    // console.log("Book URL: " + bookURL); 
-    // console.log('bookURL[i].volumeInfo.auhtors[0]: ', bookURL[i].volumeInfo.auhtors[0]);
-    // var theLink = "bookURL" + i;
-    // MY ATTEMPT TO CREATE NESTED DIVS
+
     // CREATE BOOKS WITH E-BOOK TAG
     if (bookURL[i].saleInfo.saleability == "FOR_SALE") {
       $('<div>', { class: 'col-3 book' }).append(
@@ -310,10 +307,10 @@ function populateBooks() {
           ))).appendTo('#popular-book-container');
       // THIS CREATES BOOKs WITHOUT E-BOOK TAG
 
-        $('<div>', { class: 'row book-title' }).append(
-          // BOOK TITLE
-          $('<h5>').text(bookURL[i].volumeInfo.title)
-        )
+      $('<div>', { class: 'row book-title' }).append(
+        // BOOK TITLE
+        $('<h5>').text(bookURL[i].volumeInfo.title)
+      )
       // ).appendTo('#popular-book-container');
       // THIS CREATES BOOK WITHOUT E-BOOK TAG
 
@@ -352,100 +349,162 @@ function populateBooks() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE GENERATES THE BOOKS-FOUND TABLE
-var bookStars = '';
 
-function booksFound() {
-  // Empty books-found table before displaying new info
-  $('#books-table').empty();
+function tableRowCreator() {
 
-  // LOOP THROUGH booksURL variable for volume info and create the books-found table rows
-  for (i = 0; i < 25; i++) {
+  // declared variable for eBook icon
+  var ebookImage = '';
+  // logic for skipping books without eBook links
+  if (bookURL[i].saleInfo.saleability == "FOR_SALE") {
+    ebookImage = "./assets/images/rect-ebook.png";
+  } else {
+    ebookImage = "./assets/images/rect-ebook-blank.png";
+  }
 
-    // declared variable for eBook icon
-    var ebookImage = '';
-    // logic for skipping books without eBook links
-    if (bookURL[i].saleInfo.saleability == "FOR_SALE") {
-      ebookImage = "./assets/images/rect-ebook.png";
-    } else {
-      ebookImage = "./assets/images/rect-ebook-blank.png";
+  // creates new table row html element
+  $('<tr>').append(
+    // creates table-row-NUMBER html element and sets it's value
+    $('<th>', {
+      scope: 'row',
+      text: i + 1
     }
-
-    $('<tr>').append(
-      $('<th>', {
-        scope: 'row',
-        text: i + 1
-      }
-      ),
-      $('<td>').append(
-        $('<a>', {
-          href: bookURL[i].volumeInfo.infoLink,
-          style: "text-decoration: none",
-          target: "_blank"
-        }).append(
-          $('<img>', {
-            class: 'table-book-image',
-            src: bookURL[i].volumeInfo.imageLinks.thumbnail
-          }),
-        )),
-      $('<td>').append(
-        // LINK DIV FOR E-BOOK BUTTON
-        $('<a>', {
-          href: bookURL[i].saleInfo.buyLink,
-          target: "_blank",
-        }).append(
-          // E-BOOK BUTTON IMAGE
-          $('<img>', {
-            id: 'eBook-image',
-            src: ebookImage
-          })
-        )
-      ),
-      $('<td>', {
-        class: 'table-book-name',
-        text: bookURL[i].volumeInfo.title
-      }),
-      $('<td>', {
-        text: bookURL[i].volumeInfo.publishedDate
-      }),
-      $('<td>', {
-        class: 'last-column'
+    ),
+    $('<td>').append(
+      $('<a>', {
+        // creates CLICKABLE book-cover-image html element with link
+        href: bookURL[i].volumeInfo.infoLink,
+        style: "text-decoration: none",
+        target: "_blank"
       }).append(
+        // polulates with BOOK IMAGE
         $('<img>', {
-          class: 'table-rating-image',
-          src: bookStars
+          class: 'table-book-image',
+          src: bookURL[i].volumeInfo.imageLinks.thumbnail
         }),
-      ),
-    ).appendTo('#books-table');
+      )),
+    $('<td>').append(
+      // LINK DIV FOR E-BOOK BUTTON
+      $('<a>', {
+        href: bookURL[i].saleInfo.buyLink,
+        target: "_blank",
+      }).append(
+        // E-BOOK BUTTON IMAGE
+        $('<img>', {
+          id: 'eBook-image',
+          src: ebookImage
+        })
+      )
+    ),
+    // creates BOOK-NAME table html element
+    $('<td>', {
+      class: 'table-book-name',
+      text: bookURL[i].volumeInfo.title
+    }),
+    // creates DATE-PUBLISHED table html element
+    $('<td>', {
+      text: bookURL[i].volumeInfo.publishedDate
+    }),
+    // creates BOOK-RATING table html element
+    $('<td>', {
+      class: 'last-column'
+    }).append(
+      // creates BOOK-STARS 
+      $('<img>', {
+        class: 'table-rating-image',
+        src: bookStars
+      }),
+    ),
+  ).appendTo('#books-table');
+}
 
+var bookRating = ''; // global variable for book-rating of the current book in the for-loop
+var bookStars = ''; // global variable for book-star file to display for the current book in the for-loop
+var ratingRangeLimits = [0, 0.5, 1.5, 2.5, 3.5, 4.5, 5.1]; // array of ratings' breakpoints from 0 to 5.1 (if 0 t 5 is set, a 5-star rating is returned as a 4-star rating-image)
+var originalRatingsOrder = [];
 
-    // BOOK RATINGS ARE DONE HERE
-    // bookRating variable is taking care of errors where bookrating does not exist - sets it to zero
-    var bookRating = bookURL[i].volumeInfo.averageRating;
-    if (bookRating === undefined) {
-      bookRating = 0;
-    }
-    console.log('bookRating: ', bookRating);
-    // evaluating rating for the appropriate star-rating image 
-    if (bookRating >= 0 && bookRating < 0.5) {
-      bookStars = 'assets/images/Star_rating_0_of_5.png';
+var highToLowRatings = [];   // array of bookURL ratings sorted from highest to lowest book rating
+var highToLowRatingsIndices = []; // array of bookURL indices sorted from highest to lowest book rating
 
-    } else if (bookRating >= 0.5 && bookRating < 1.5) {
-      bookStars = 'assets/images/Star_rating_1_of_5.png';
+var lowToHighRatings = [];  // array of bookURL ratings sorted from lowest to highest book rating
+var lowToHighRatingsIndices = [];  // array of bookURL indices sorted from lowest to highest book rating
 
-    } else if (bookRating >= 1.5 && bookRating < 2.5) {
-      bookStars = 'assets/images/Star_rating_2_of_5.png';
+function ratingsFunction() {
+  // BOOK RATINGS ARE DONE HERE
+  bookRating = bookURL[i].volumeInfo.averageRating;
+  // bookRating variable is taking care of errors where bookrating does not exist - sets it to zero
+  if (bookRating === undefined) {
+    bookRating = 0;
+    console.log('bookRating set to zero: ', bookRating);
+  }
 
-    } else if (bookRating >= 2.5 && bookRating < 3.5) {
-      bookStars = 'assets/images/Star_rating_3_of_5.png';
-
-    } else if (bookRating >= 2.5 && bookRating < 4.5) {
-      bookStars = 'assets/images/Star_rating_4_of_5.png';
-
-    } else if (bookRating >= 4.5 && bookRating <= 5) {
-      bookStars = 'assets/images/Star_rating_5_of_5.png';
+  // match star file to be displayed with rating
+  for (r = 0; r < ratingRangeLimits.length; r++) {
+    // evaluating rating for the appropriate star-rating image
+    if (bookRating >= ratingRangeLimits[r] && bookRating < ratingRangeLimits[r + 1]) {
+      bookStars = 'assets/images/Star_rating_' + r + '_of_5.png';
     }
   }
+  console.log('bookRating: ', bookRating);
+  console.log('bookStars: ', bookStars);
 }
+
+function booksFoundTable() {
+  // Empty books-found table before displaying new info
+  $('#books-table').empty();
+  originalRatingsOrder = [];
+
+  console.log('bookURL: ', bookURL);
+  // LOOP THROUGH booksURL variable for volume info and RETRIEVE AND SORT BOOK-RATINGS
+  for (i = 0; i < bookURL.length; i++) {
+
+    ratingsFunction();
+
+    // push bookrating in original order
+    originalRatingsOrder.push(bookRating);
+    console.log('originalRatingsOrder: ', originalRatingsOrder);
+
+  }
+
+  // set book order to print foundBooksTable
+
+  function sortWithIndices(toSort) {
+    for (var i = 0; i < toSort.length; i++) {
+      toSort[i] = [toSort[i], i];
+    }
+    toSort.sort(function (left, right) {
+      return left[0] < right[0] ? -1 : 1;
+    });
+    toSort.sortIndices = [];
+    for (var j = 0; j < toSort.length; j++) {
+      toSort.sortIndices.push(toSort[j][1]);
+      toSort[j] = toSort[j][0];
+    }
+    return toSort;
+  }
+
+  lowToHighRatings = '';
+  lowToHighRatings = originalRatingsOrder;
+
+  sortWithIndices(lowToHighRatings);
+  console.log('lowToHighRatings: ', lowToHighRatings);
+
+  lowToHighRatingsIndices = '';
+  lowToHighRatingsIndices = lowToHighRatings.sortIndices;
+  console.log('lowToHighRatingsIndices: ', lowToHighRatingsIndices);
+
+  highToLowRatingsIndices = lowToHighRatingsIndices.reverse();
+  console.log('highToLowRatingsIndices: ', highToLowRatingsIndices);
+
+  // create table rows to show higest rated books first
+  for (i = 0; i < highToLowRatingsIndices.length; i++) {
+    ratingsFunction();
+    tableRowCreator();
+    console.log('i of highToLowRatingsIndices: ', i);
+  }
+
+
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -458,7 +517,7 @@ $("#search-button").on("click", function (event) {
   searchByBook = $("#search-by-book").val();
 
   //If the user clicks the button without entering search info, the if statement runs, and displays one of our pre-selected recommended authors
-  if(searchByAuthor == "" && searchByBook == ""){
+  if (searchByAuthor == "" && searchByBook == "") {
     topAuthor();
     authorSpotlight = authors[authorNumber].fullName; //randomly selects an author from the "authors" object above
     $("#popular-title").text("You did not enter search parameters. Here are some recommendations by " + authorSpotlight + ":");
@@ -478,52 +537,52 @@ $("#search-button").on("click", function (event) {
       console.log(response);
       bookURL = response.items;
       populateBooks(authorNumber);
-      booksFound();
+      booksFoundTable();
       console.log('bookURL: ', bookURL);
       $("#author-image").attr('src', authors[authorNumber].image);
       $('#today-top').text("Looking for a good read? Check out our Author Spotlight!");
       $('#author-name').text(authorSpotlight);
       $('#bio-caption').text(authors[authorNumber].caption)
-    }); 
-    
-//This "else" is what runs if the user enters any search parameters.
-  }else{
+    });
+
+    //This "else" is what runs if the user enters any search parameters.
+  } else {
     //The if/elses below change the text based on the user's chosen search parameters: author only, book only, or both
-    if(searchByAuthor == ""){
+    if (searchByAuthor == "") {
       $("#popular-title").text("You searched for the following book title: " + searchByBook);
-    }else if(searchByBook == ""){
-    $("#popular-title").text("You searched for the following author: " + searchByAuthor);
-    console.log("You searched for: ", searchByAuthor);
-    }else {
+    } else if (searchByBook == "") {
+      $("#popular-title").text("You searched for the following author: " + searchByAuthor);
+      console.log("You searched for: ", searchByAuthor);
+    } else {
       $("#popular-title").text("You searched for " + searchByBook + " by " + searchByAuthor + ":");
     }
 
-  var searchedAuthor = searchByAuthor;
+    var searchedAuthor = searchByAuthor;
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-  //Tyler's code here... for dynamic images
-  //This uses google API to get book thumbnail images and titles. See the function populateBooks().
-  $.ajaxPrefilter(function (options) {
-    if (options.crossDomain && jQuery.support.cors) {
-      var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
-      options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
-    }
-  });
-  var authorSearch = searchByAuthor;
-  var titleSearch = searchByBook;
-  var searchURL = "https://www.googleapis.com/books/v1/volumes?q=" + titleSearch + "+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
-  $.ajax({
-    url: searchURL,
-    method: "GET"
-  }).then(function (response) {
-    console.log(response);
-    bookURL = response.items;
-    populateBooks();
-    booksFound();
-    //The clearing below is necessary so if the user wants a new search, the old search info doesn't interfere
-    searchByAuthor = '';
-    searchByBook = '';
-  });
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    //Tyler's code here... for dynamic images
+    //This uses google API to get book thumbnail images and titles. See the function populateBooks().
+    $.ajaxPrefilter(function (options) {
+      if (options.crossDomain && jQuery.support.cors) {
+        var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+        options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+      }
+    });
+    var authorSearch = searchByAuthor;
+    var titleSearch = searchByBook;
+    var searchURL = "https://www.googleapis.com/books/v1/volumes?q=" + titleSearch + "+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
+    $.ajax({
+      url: searchURL,
+      method: "GET"
+    }).then(function (response) {
+      console.log(response);
+      bookURL = response.items;
+      populateBooks();
+      booksFoundTable();
+      //The clearing below is necessary so if the user wants a new search, the old search info doesn't interfere
+      searchByAuthor = '';
+      searchByBook = '';
+    });
   }
 });
 
