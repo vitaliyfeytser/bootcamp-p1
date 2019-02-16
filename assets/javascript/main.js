@@ -350,7 +350,7 @@ function populateBooks() {
 ///////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE GENERATES THE BOOKS-FOUND TABLE
 
-function tableRowCreator() {
+function tableRowCreator() {  // !!! MUST DECLARE 'var row = x' before this function is called for proper row numbers
 
   // declared variable for eBook icon
   var ebookImage = '';
@@ -366,7 +366,7 @@ function tableRowCreator() {
     // creates table-row-NUMBER html element and sets it's value
     $('<th>', {
       scope: 'row',
-      text: i + 1
+      text: row + 1
     }
     ),
     $('<td>').append(
@@ -436,7 +436,6 @@ function ratingsFunction() {
     bookRating = 0;
     console.log('bookRating set to zero: ', bookRating);
   }
-
   // match star file to be displayed with rating
   for (r = 0; r < ratingRangeLimits.length; r++) {
     // evaluating rating for the appropriate star-rating image
@@ -454,10 +453,15 @@ function booksFoundTable() {
   originalRatingsOrder = [];
 
   console.log('bookURL: ', bookURL);
-  // LOOP THROUGH booksURL variable for volume info and RETRIEVE AND SORT BOOK-RATINGS
+  // LOOP THROUGH booksURL variable for volume info and RETRIEVE BOOK-RATINGS IN ORIGINAL ORDER
   for (i = 0; i < bookURL.length; i++) {
 
-    ratingsFunction();
+    bookRating = bookURL[i].volumeInfo.averageRating;
+    // this code is taking care of errors where bookrating does not exist - sets it to zero
+    if (bookRating === undefined) {
+      bookRating = 0;
+      console.log('bookRating set to zero: ', bookRating);
+    }
 
     // push bookrating in original order
     originalRatingsOrder.push(bookRating);
@@ -465,7 +469,7 @@ function booksFoundTable() {
 
   }
 
-  // set book order to print foundBooksTable
+  // sort books by rating
 
   function sortWithIndices(toSort) {
     for (var i = 0; i < toSort.length; i++) {
@@ -496,8 +500,11 @@ function booksFoundTable() {
   console.log('highToLowRatingsIndices: ', highToLowRatingsIndices);
 
   // create table rows to show higest rated books first
-  for (i = 0; i < highToLowRatingsIndices.length; i++) {
+  for (j = 0; j < highToLowRatingsIndices.length; j++) {
+    // guides functions through bookURL indices in high-to-low book-rating sort order
+    i = highToLowRatingsIndices[j];
     ratingsFunction();
+    row = j
     tableRowCreator();
     console.log('i of highToLowRatingsIndices: ', i);
   }
