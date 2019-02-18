@@ -236,7 +236,8 @@ function topAuthor() {
   });
 
   $("#author-image").attr('src', authors[authorNumber].image);
-  $('#today-top').text("Looking for a good read? Check out our Author Spotlight!");
+  $('#today-top1').text("Looking for a good read?");
+  $('#today-top2').text("Check out our Author Spotlight!");
   $('#author-name').text(authors[authorNumber].fullName);
   $('#bio-caption').text(authors[authorNumber].caption);
 }
@@ -484,11 +485,9 @@ function booksFoundTable() {
       bookRating = 0;
       console.log('bookRating set to zero: ', bookRating);
     }
-
     // push bookrating in original order
     originalRatingsOrder.push(bookRating);
     console.log('originalRatingsOrder: ', originalRatingsOrder);
-
   }
 
   // sort books by rating
