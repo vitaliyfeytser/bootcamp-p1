@@ -11,17 +11,15 @@ body {
     */
 }
 
-#ghost-navbar-plus-carousel {
-    position: absolute;
-    width: 100%;
+.navbar {
+    /* z-index: -3; */
+    box-shadow: 0 0 .5em 0 black;
+    transition: 0.3s;
 }
 
-#ghost-navbar {
-    z-index: -99;
-    /* opacity: 0; */
-    /* position: absolute; */
-    width: 100%;
-}
+/* #exampleModal {
+z-index: 10;
+} */
 
 #sign-in-modal {
     background: none;
@@ -31,6 +29,7 @@ body {
 
 .carousel {
     /* position: absolute; */
+    /* z-index: 1; */
     width: 100%;
 }
 
@@ -40,7 +39,8 @@ body {
 }
 
 .wide-author-container {
-    position: relative;
+    position: absolute;
+    z-index: 1;
     width: 100%;
     /* top: 12vw; */
     /* padding-left: 15vw;
@@ -53,7 +53,6 @@ body {
 
 .author-img {
     height: 18vw;
-
     box-shadow: 
     -.05em -.05em 2.5em rgb(27, 27, 27),
     -.05em .05em 2.5em rgb(27, 27, 27),
@@ -64,7 +63,10 @@ body {
 .today-top {
     color: black;
     font-size: 2vw;
-    line-height: 1em;
+    line-height: 2vw;
+    font-weight: bold;
+    margin: 0.25em;
+    padding: 0;
     text-shadow: 
     -.05em -.05em 2.5em white,
     .05em -.05em 2.5em white,
@@ -77,8 +79,10 @@ body {
 }
 
 #author-name {
-    color: white;
     font-size: 3vw;
+    color: white;
+    margin: 0;
+    padding: 0;
     text-shadow: 
     -.05em -.05em 2.5em rgb(27, 27, 27),
     .05em -.05em 2.5em rgb(27, 27, 27),
@@ -88,14 +92,16 @@ body {
     .075em 0 2.5em rgb(27, 27, 27),
     0 -.075em 2.5em rgb(27, 27, 27),
     0 .075em 2.5em rgb(27, 27, 27);
+
 }
 
 
 .author-bio {
     color: white;
-    font-size: 1.25vw;
+    font-size: 1.5vw;
     margin: 0;
     padding: 0;
+
     text-shadow: 
     -.05em -.05em 1.5em rgb(27, 27, 27),
     .05em -.05em 1.5em rgb(27, 27, 27),
@@ -105,6 +111,8 @@ body {
     .075em 0 1.5em rgb(27, 27, 27),
     0 -.075em 1.5em rgb(27, 27, 27),
     0 .075em 1.5em rgb(27, 27, 27);
+    
+    /* overflow-y: scroll; */
 }
 
 #wikipedia-credit {
@@ -147,6 +155,7 @@ body {
     font-weight: bold;
 }
 
+
 .book-image {
     cursor: pointer;
     height: 18vw;
@@ -159,15 +168,48 @@ body {
 .book-image:hover {
     box-shadow: 0 .5em 1.5em 0 black;
 }
+
+.popular-books {
+    overflow-x: scroll;
+}
+
+.book-row {
+    display: flex;
+    flex-flow: wrap-reverse;
+    margin-left: -1em;
+}
+
+.book-buttons{
+    margin: 0em;
+}
+
+.favorite-button {
+    height: 1.5vw;
+    /* width: 2em; */
+    margin: 0.15em;
+    /* opacity: 0.5;
+    filter: alpha(opacity=50); */
+}
+
+#eBook-image {
+    height: 1.5vw;
+    /* width: 2em; */
+    margin: 0.15em;
+    /* opacity: 0.5;
+    filter: alpha(opacity=50); */
+}
+
 .book-title {
-    margin-top: .5em;
+    margin-top: .05em;
+    font-weight: bold;
 }
 
 
 /* COMPLETE WORKS TABLE */
 
+
 #google-books-logo {
-    height: 1.5vw;
+    height: 1em;
 }
 
 #google-credit {
@@ -179,6 +221,42 @@ body {
     margin: 1em 0em;
     font-weight: bold;
 }
+
+/* -------------------------------------- */
+
+#all-tables{
+    justify-content: space-between;
+}
+#table-set-1-column {
+    padding: 0;
+}
+
+#table-set-1-row {
+    justify-content: space-between;
+    flex-direction: row-reverse; 
+    
+}
+#table-set-2-column {
+    padding: 0;
+}
+
+/* #found-books-table {
+    align-self: flex-start;
+} */
+
+#table-set-1-inner-row {
+    flex-flow: row wrap;
+}
+#table-set-2-inner-row {
+    flex-flow: row wrap;
+}
+
+
+/* #table-set-2-column {
+    align-self: auto; */
+    /* justify-content: flex-start; */
+    /* flex-direction: row-reverse; */
+/* } */
 
 .side-table {
     background-color: whitesmoke;
@@ -197,18 +275,18 @@ body {
     width: 5vw;
 }
 
-#eBook-image {
-    height: 2vw;
-    /* width: 2em; */
-    margin: .5em;
-    /* opacity: 0.5;
-    filter: alpha(opacity=50); */
+.footer {
+    justify-content: center;
+    text-align: center;
 }
 
-.favorite-button {
-    height: 2vw;
-    /* width: 2em; */
-    margin: .5em;
-    /* opacity: 0.5;
-    filter: alpha(opacity=50); */
+/* ----------------- MEDIA QUERIES ----------------- */
+
+
+/* ------ LOWER TABLES ---------- */
+#table-set-1-inner-row {
+    flex-flow: row wrap;
+}
+#table-set-2-inner-row {
+    flex-flow: row wrap;
 }
