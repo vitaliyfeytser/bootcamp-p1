@@ -28,7 +28,7 @@ z-index: 10;
 }
 
 .firebaseui-auth-container {
-    z-index: 10;
+    z-index: 100;
 }
 
 .carousel {
@@ -190,7 +190,7 @@ z-index: 10;
 .favorite-button {
     height: 1.5vw;
     /* width: 2em; */
-    margin: 0.15em;
+    margin: 0.25em;
     opacity: 0.5;
     /* filter: alpha(opacity=50); */
 }
@@ -203,7 +203,7 @@ z-index: 10;
 
 .eBook-image {
     height: 1.5vw;
-    margin: 0.15em;
+    margin: 0.25em;
     opacity: 0.5;
     /* filter: alpha(opacity=50); */
 }
