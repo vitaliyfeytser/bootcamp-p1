@@ -12,7 +12,7 @@ body {
 }
 
 .navbar {
-    /* z-index: -3; */
+    /* z-index: 90; */
     box-shadow: 0 0 .5em 0 black;
     transition: 0.3s;
 }
@@ -25,6 +25,10 @@ z-index: 10;
     background: none;
     /* box-shadow: none; */
     border: none;
+}
+
+.firebaseui-auth-container {
+    z-index: 10;
 }
 
 .carousel {
@@ -467,7 +471,6 @@ z-index: 10;
     }
     .eBook-image {
         height: 3.5vw;
-        width: 2em;
         margin: 0vw .5vw 3vw .5vw;
         opacity: 0.5;
         /* filter: alpha(opacity=50); */
