@@ -339,24 +339,9 @@ z-index: 10;
         0 -.075em .5em rgb(27, 27, 27);
     }
     
-    /* .today-top {
+    .today-top {
         display: none;
-        color: black;
-        font-size: 3vw;
-        line-height: 3vw;
-        font-weight: bold;
-        margin: 0.25em;
-        padding: 0;
-        text-shadow: 
-        -.05em -.05em 0.5em white,
-        .05em -.05em 0.5em white,
-        -.05em .05em 0.5em white,
-        .05em .05em 0.5em white,
-        -.075em 0 0.5em white,
-        .075em 0 0.5em white,
-        0 -.075em 0.5em white,
-        0 .075em 0.5em white;
-    } */
+    }
     
     #author-name {
         font-size: 7vw;
