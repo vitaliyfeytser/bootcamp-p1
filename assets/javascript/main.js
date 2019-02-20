@@ -304,7 +304,7 @@ function populateBooks() {
                 target: "#",
               }).append(
                 $('<img>', {
-                  class: 'favorite-button',
+                  class: 'favorite-button favorite-button-spotlight',
                   src: "./assets/images/favorite-heart-red.png",
                   // this value setting is helping track the favorite button's association with the index of the volumeInfo of the current bookURL object
                   value: i
@@ -316,7 +316,7 @@ function populateBooks() {
               }).append(
                 // E-BOOK BUTTON IMAGE
                 $('<img>', {
-                  id: 'eBook-image',
+                  class: 'eBook-image eBook-image-spotlight',
                   src: ebookImage
                 })
               )
@@ -370,7 +370,7 @@ function populateBooks() {
     //           }).append(
     //             // E-BOOK BUTTON IMAGE
     //             $('<img>', {
-    //               id: 'eBook-image',
+    //               class: 'eBook-image',
     //               src: "./assets/images/rect-ebook-blank.png"
     //             })
     //           )
@@ -387,6 +387,13 @@ function populateBooks() {
 
   };
 }
+// [1].volumeInfo.imageLinks.thumbnail
+// "http://books.google.com/books/content?id=VsT3DQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+// "http://books.google.com/books/content?id=VsT3DQAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api"
+
+
+
+https://books.google.com/books/content/images/frontcover/kYjqAQAAQBAJ?fife=w400-h600
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE GENERATES THE BOOKS-FOUND TABLE
@@ -442,7 +449,7 @@ function tableRowCreator() {  // !!! MUST DECLARE 'var row = x' before this func
       }).append(
         // E-BOOK BUTTON IMAGE
         $('<img>', {
-          id: 'eBook-image',
+          class: 'eBook-image eBook-image-table',
           src: ebookImage
         })
       ),
@@ -453,7 +460,7 @@ function tableRowCreator() {  // !!! MUST DECLARE 'var row = x' before this func
       }).append(
         // FAVORITE BUTTON IMAGE
         $('<img>', {
-          class: 'favorite-button',
+          class: 'favorite-button favorite-button-table',
           src: "./assets/images/favorite-heart-red.png",
           // this value setting is helping track the favorite button's association with the index of the volumeInfo of the current bookURL object
           value: i
@@ -467,6 +474,7 @@ function tableRowCreator() {  // !!! MUST DECLARE 'var row = x' before this func
     }),
     // creates DATE-PUBLISHED table html element
     $('<td>', {
+      class: "date-published-column",
       text: bookURL[i].volumeInfo.publishedDate
     }),
     // creates BOOK-RATING table html element

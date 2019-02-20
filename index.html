@@ -21,7 +21,7 @@
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Sci-Fi & Fantasy World-Portal</a>
+        <a class="navbar-brand" href="index.html">Sci-Fi & Fantasy World-Portal</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -90,10 +90,8 @@
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-3 col-sm-2 col-md-2">
-                            <img id="author-image"
-                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg/440px-Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg"
-                                class="rounded float-right author-img" alt="...">
+                        <div class="col-3 col-sm-2 col-md-2" id="col-author-image">
+                            <img id="author-image" src="" class="rounded float-right author-img" alt="...">
                         </div>
                         <div class="col-9 col-sm-10 col-md-10 author-box">
                             <!-- <div class="container">
@@ -101,28 +99,38 @@
                                 <div class="row">
                                     <div class="col-md-auto"> -->
 
-                            <p class="today-top">Looking for a good read?</p>
-                            <p class="today-top">Check out our Author Spotlight!</p>
+                            <p class="today-top">
+                                <!-- Looking for a good read? -->
+                            </p>
+                            <p class="today-top">
+                                <!-- Check out our Author Spotlight! -->
+                            </p>
                             <!-- </div>
                                 <div class="row"> -->
-                            <h1 id="author-name">Brandon Sanderson</h1>
+                            <h1 id="author-name">
+                                <!-- Brandon Sanderson -->
+                            </h1>
                             <!-- </div>
 
                                 <div class="row"> -->
                             <!-- <div> -->
                             <!--THIS DIV IS HERE FOR FORMATTING PURPOSES - MAKES WIKIPEDIA STUFF LOOK CLOSER AT LOWER RESOLUTIONS -->
                             <p class="author-bio" id="bio-caption">
-                                Brandon Sanderson (born December 19, 1975) is an American fantasy and
+
+                                <!-- Brandon Sanderson (born December 19, 1975) is an American fantasy and
                                 science fiction writer. He is best known for the Cosmere universe, in
                                 which
                                 most of his fantasy novels (most notably the Mistborn series and The
                                 Stormlight Archive) are set. He is also known for finishing Robert
                                 Jordan's
-                                epic fantasy series The Wheel of Time.
+                                epic fantasy series The Wheel of Time. -->
+
                             </p>
-                            <a href="https://en.wikipedia.org/wiki/Main_Page" id="wikipedia-credit"><img
-                                    src="./assets/images/1024px-Wikipedia_svg_logo.svg.png" id="wikipedia-logo">
-                                by Wikipedia
+                            <a href="https://en.wikipedia.org/wiki/Main_Page" id="wikipedia-credit">
+                                <p id="by-wikipedia">
+                                        <img src="./assets/images/1024px-Wikipedia_svg_logo.svg.png" id="wikipedia-logo">
+                                    by Wikipedia
+                                </p>
                             </a>
                             <!-- </div> -->
                             <!-- </div>
@@ -212,7 +220,7 @@
                                         <th scope="col">Cover</th>
                                         <th scope="col"></th>
                                         <th scope="col">Book</th>
-                                        <th scope="col">Date Published</th>
+                                        <th scope="col" class="date-published-column">Date Published</th>
                                         <th scope="col">Rating</th>
                                     </tr>
                                 </thead>
@@ -226,7 +234,7 @@
                                         </td>
                                         <td><img src="./assets/images/rect-ebook-blank.png" id="eBook-image"></td>
                                         <td class="table-book-name">The Way of Kings</td>
-                                        <td>August 31, 2010</td>
+                                        <td class="date-published-column">August 31, 2010</td>
                                         <td class="last-column"><img class="table-rating-image"
                                                 src="assets/images/Star_rating_5_of_5.png">
                                         </td>
@@ -240,7 +248,7 @@
                                         </td>
                                         <td><img src="./assets/images/rect-ebook-blank.png" id="eBook-image"></td>
                                         <td>Words of Radiance</td>
-                                        <td>March 14, 2014</td>
+                                        <td class="date-published-column">March 14, 2014</td>
                                         <td class="last-column"><img class="table-rating-image"
                                                 src="assets/images/Star_rating_5_of_5.png">
                                         </td>
@@ -254,7 +262,7 @@
                                         </td>
                                         <td><img src="./assets/images/rect-ebook-blank.png" id="eBook-image"></td>
                                         <td>Oathbringer</td>
-                                        <td>November 14, 2017</td>
+                                        <td class="date-published-column">November 14, 2017</td>
                                         <td class="last-column"><img class="table-rating-image"
                                                 src="assets/images/Star_rating_5_of_5.png">
                                         </td>
@@ -268,7 +276,7 @@
                                         </td>
                                         <td><img src="./assets/images/rect-ebook-blank.png" id="eBook-image"></td>
                                         <td class="table-book-name">The Eye of the World</td>
-                                        <td>August 31, 2010</td>
+                                        <td class="date-published-column">August 31, 2010</td>
                                         <td class="last-column"><img class="table-rating-image"
                                                 src="assets/images/Star_rating_5_of_5.png">
                                         </td>
@@ -283,7 +291,7 @@
                                         </td>
                                         <td><img src="./assets/images/rect-ebook-blank.png" id="eBook-image"></td>
                                         <td>The Great Hunt</td>
-                                        <td>March 14, 2014</td>
+                                        <td class="date-published-column">March 14, 2014</td>
                                         <td class="last-column"><img class="table-rating-image"
                                                 src="assets/images/Star_rating_5_of_5.png">
                                         </td>
@@ -298,7 +306,7 @@
                                         <td><img src="./assets/images/rect-ebook-blank.png" href="" id="eBook-image">
                                         </td>
                                         <td>The Dragon Reborn</td>
-                                        <td>November 14, 2017</td>
+                                        <td class="date-published-column">November 14, 2017</td>
                                         <td class="last-column"><img class="table-rating-image"
                                                 src="assets/images/Star_rating_5_of_5.png">
                                         </td>
@@ -311,7 +319,7 @@
 
                         <!-- AUTHOR & WORKS -->
                         <!-- <div class="col-sm-3 col-md-6 col-lg-2"> -->
-                        <div class="col-sm- col-md-6 col-lg-3">
+                        <div class="col-sm-12 col-md-12 col-lg-3">
                             <div class="container">
                                 <div class="row" id="table-set-1-inner-row">
 
@@ -439,7 +447,7 @@
             <!-- AUTHOR & WORKS -->
 
             <!-- <div class="col-3 col-md-6 col-lg-3"> -->
-            <div class="col-sm-12 col-md-6 col-lg-3" id="table-set-2-column">
+            <div class="col-sm-12 col-md-12 col-lg-3" id="table-set-2-column">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12 col-lg-10">
