@@ -208,20 +208,30 @@ var authors = [
 //First, it loads the intial "author spotlight", by randomly selecting an author from the author object above
 
 // var authorSpotlightNumber = Math.floor(Math.random() * authors.length);
-var authorNumber = Math.floor(Math.random() * authors.length);
+var authorNumber = '';
+
+var chooseAuthor = Math.floor(Math.random() * authors.length);
+// this statement prevents sequentially repeating author spotlight
+if (authorNumber === chooseAuthor) {
+  authorNumber = chooseAuthor + 1;
+} else {
+  authorNumber = chooseAuthor;
+}
+
+
 var authorSpotlight = authors[authorNumber].fullName;
 
 function topAuthor() {
-  authorNumber = Math.floor(Math.random() * authors.length);
+  // authorNumber = Math.floor(Math.random() * authors.length);
   authorSpotlight = authors[authorNumber].fullName;
 
-  $.ajaxPrefilter(function (options) {
-    if (options.crossDomain && jQuery.support.cors) {
-      var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
-      options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
-      //options.url = "http://cors.corsproxy.io/url=" + options.url;
-    }
-  });
+  // $.ajaxPrefilter(function (options) {
+  //   if (options.crossDomain && jQuery.support.cors) {
+  //     var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+  //     options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+  //     //options.url = "http://cors.corsproxy.io/url=" + options.url;
+  //   }
+  // });
   var searchURL = "https://www.googleapis.com/books/v1/volumes?q=+inauthor:" + authors[authorNumber].fullName + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
 
   $.ajax({
@@ -236,7 +246,8 @@ function topAuthor() {
   });
 
   $("#author-image").attr('src', authors[authorNumber].image);
-  $('#today-top').text("Looking for a good read? Check out our Author Spotlight!");
+  $('#today-top1').text("Looking for a good read?");
+  $('#today-top2').text("Check out our Author Spotlight!");
   $('#author-name').text(authors[authorNumber].fullName);
   $('#bio-caption').text(authors[authorNumber].caption);
 }
@@ -264,8 +275,18 @@ function populateBooks() {
       bookImage = bookURL[i].volumeInfo.imageLinks.thumbnail;
     }
 
-    // CREATE BOOKS WITH E-BOOK TAG
+    // declared variable for eBook icon
+    var ebookImage = '';
+
+    // logic for skipping books without eBook links
     if (bookURL[i].saleInfo.saleability == "FOR_SALE") {
+      ebookImage = "./assets/images/rect-ebook.png";
+    } else {
+      ebookImage = "./assets/images/rect-ebook-blank.png";
+    }
+
+    // CREATE BOOKS WITH E-BOOK TAG
+    // if (bookURL[i].saleInfo.saleability == "FOR_SALE") {
       $('<div>', { class: 'col-3 book' }).append(
         $('<div>', { class: 'container' }).append(
           $('<div>', {
@@ -273,11 +294,10 @@ function populateBooks() {
             // onclick: 'favoriteBook()',
             // data_cover: bookImage
           }).append(
-            // 4 LARGE BOOK IMAGES AT TOP
+            // x of 4 LARGE BOOK IMAGES AT TOP
             // book covers are made interactive - link explores purchase options
             $('<a>', {
               href: bookURL[i].volumeInfo.infoLink,
-              style: "text-decoration: none",
               target: "_blank"
             }).append(
               $('<img>', {
@@ -288,13 +308,17 @@ function populateBooks() {
               })),
             // FAVORITE BUTTON /////////////////////////////////////////////////////////
             // DIV FOR FAVORITE BUTTON
-            $('<div class="col">').append(
-              $('<img>', {
-                class: 'favorite-button',
-                src: "./assets/images/favorite-heart-red.png",
-                // this value setting is helping track the favorite button's association with the index of the volumeInfo of the current bookURL object
-                value: i
-              }),
+            $('<div class="book-buttons">').append(
+              $('<a>', {
+                href: "#",
+                target: "#",
+              }).append(
+                $('<img>', {
+                  class: 'favorite-button favorite-button-spotlight',
+                  src: "./assets/images/favorite-heart-red.png",
+                  // this value setting is helping track the favorite button's association with the index of the volumeInfo of the current bookURL object
+                  value: i
+                })),
               // LINK DIV FOR E-BOOK BUTTON
               $('<a>', {
                 href: bookURL[i].saleInfo.buyLink,
@@ -302,66 +326,90 @@ function populateBooks() {
               }).append(
                 // E-BOOK BUTTON IMAGE
                 $('<img>', {
-                  id: 'eBook-image',
-                  src: "./assets/images/rect-ebook.png"
+                  class: 'eBook-image eBook-image-spotlight',
+                  src: ebookImage
                 })
               )
             ),
           )),
 
         $('<div>', { class: 'container' }).append(
+          // BOOK TITLE
           $('<div>', { class: 'row book-title' }).append(
-            // BOOK TITLE
-            $('<h5>').text(bookURL[i].volumeInfo.title)
+            $('<p>').text(bookURL[i].volumeInfo.title)
           ))).appendTo('#popular-book-container');
-      // THIS CREATES BOOKs WITHOUT E-BOOK TAG
 
-      $('<div>', { class: 'row book-title' }).append(
-        // BOOK TITLE
-        $('<h5>').text(bookURL[i].volumeInfo.title)
-      )
-      // ).appendTo('#popular-book-container');
       // THIS CREATES BOOK WITHOUT E-BOOK TAG
+    // } else {
+    //   $('<div>', { class: 'col-3 book' }).append(
+    //     $('<div>', { class: 'container' }).append(
+    //       $('<div>', {
+    //         class: 'row book-row'
+    //         // onclick: 'favoriteBook()',
+    //         // data_cover: bookImage
+    //       }).append(
+    //         // x of 4 LARGE BOOK IMAGES AT TOP
+    //         // book covers are made interactive - link explores purchase options
+    //         $('<a>', {
+    //           href: bookURL[i].volumeInfo.infoLink,
+    //           target: "_blank"
+    //         }).append(
+    //           $('<img>', {
+    //             // onclick: 'favoriteBook()',
+    //             class: 'book-image',
+    //             src: bookImage
+    //             // 'data-author': bookURL[i].volumeInfo.auhtors[0]
+    //           })),
+    //         // FAVORITE BUTTON /////////////////////////////////////////////////////////
+    //         // DIV FOR FAVORITE BUTTON
+    //         $('<div class="book-buttons">').append(
+    //           $('<a>', {
+    //             href: "#",
+    //             target: "#",
+    //           }).append(
+    //             $('<img>', {
+    //               class: 'favorite-button',
+    //               src: "./assets/images/favorite-heart-blank.png",
+    //               // this value setting is helping track the favorite button's association with the index of the volumeInfo of the current bookURL object
+    //               value: i
+    //             })),
+    //           // LINK DIV FOR E-BOOK BUTTON
+    //           $('<a>', {
+    //             href: "#",
+    //             target: "#",
+    //           }).append(
+    //             // E-BOOK BUTTON IMAGE
+    //             $('<img>', {
+    //               class: 'eBook-image',
+    //               src: "./assets/images/rect-ebook-blank.png"
+    //             })
+    //           )
+    //         ),
+    //       )),
 
-    } else {
-      $('<div>', { class: 'col-3 book' }).append(
-        $('<div>', { class: 'container' }).append(
-          $('<div>', { class: 'row book-row' }).append(
-            $('<a>', {
-              href: bookURL[i].volumeInfo.infoLink,
-              style: "text-decoration: none",
-              target: "_blank"
-            }).append(
-              $('<img>', {
-                class: 'book-image',
-                src: bookURL[i].volumeInfo.imageLinks.thumbnail
-              })),
-            // FAVORITE BUTTON /////////////////////////////////////////////////////////////
-            $('<div class="col">').append(
-              $('<img>', {
-                class: 'favorite-button',
-                src: "./assets/images/favorite-heart-blank.png",
-                value: i
-              })
-            ))),
-        $('<div>', { class: 'container' }).append(
-          $('<div>', { class: 'row book-title' }).append(
-            $('<h5>').text(bookURL[i].volumeInfo.title)
-          )
-        )
-      ).appendTo('#popular-book-container');
-    }
+    //     $('<div>', { class: 'container' }).append(
+    //       // BOOK TITLE
+    //       $('<div>', { class: 'row book-title' }).append(
+    //         $('<p>').text(bookURL[i].volumeInfo.title)
+    //       ))).appendTo('#popular-book-container');
+
+    // }
 
   };
 }
+// [1].volumeInfo.imageLinks.thumbnail
+// "http://books.google.com/books/content?id=VsT3DQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+// "http://books.google.com/books/content?id=VsT3DQAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api"
+
+
+
+https://books.google.com/books/content/images/frontcover/kYjqAQAAQBAJ?fife=w400-h600
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // THIS CODE GENERATES THE BOOKS-FOUND TABLE
 
 function tableRowCreator() {  // !!! MUST DECLARE 'var row = x' before this function is called for proper row numbers
 
-  // declared variable for eBook icon
-  var ebookImage = '';
 
   // PREVENTS ERROR IF NO BOOK-IMAGE THUMBNAIL EXISTS IN RETURNED OBJECT
   var bookImage = "./assets/images/book-cover-placeholder.jpg";
@@ -372,6 +420,8 @@ function tableRowCreator() {  // !!! MUST DECLARE 'var row = x' before this func
     bookImage = bookURL[i].volumeInfo.imageLinks.thumbnail;
   }
 
+  // declared variable for eBook icon
+  var ebookImage = '';
 
   // logic for skipping books without eBook links
   if (bookURL[i].saleInfo.saleability == "FOR_SALE") {
@@ -409,8 +459,21 @@ function tableRowCreator() {  // !!! MUST DECLARE 'var row = x' before this func
       }).append(
         // E-BOOK BUTTON IMAGE
         $('<img>', {
-          id: 'eBook-image',
+          class: 'eBook-image eBook-image-table',
           src: ebookImage
+        })
+      ),
+      // LINK DIV FOR FAVORITE BUTTON
+      $('<a>', {
+        href: "#",
+        target: "#",
+      }).append(
+        // FAVORITE BUTTON IMAGE
+        $('<img>', {
+          class: 'favorite-button favorite-button-table',
+          src: "./assets/images/favorite-heart-red.png",
+          // this value setting is helping track the favorite button's association with the index of the volumeInfo of the current bookURL object
+          value: i
         })
       )
     ),
@@ -421,18 +484,20 @@ function tableRowCreator() {  // !!! MUST DECLARE 'var row = x' before this func
     }),
     // creates DATE-PUBLISHED table html element
     $('<td>', {
+      class: "date-published-column",
       text: bookURL[i].volumeInfo.publishedDate
     }),
     // creates BOOK-RATING table html element
     $('<td>', {
       class: 'last-column'
-    }).append(
-      // creates BOOK-STARS 
-      $('<img>', {
-        class: 'table-rating-image',
-        src: bookStars
-      }),
-    ),
+    })
+      .append(
+        // creates BOOK-STARS 
+        $('<img>', {
+          class: 'table-rating-image',
+          src: bookStars
+        }),
+      ),
   ).appendTo('#books-table');
 }
 
@@ -484,11 +549,9 @@ function booksFoundTable() {
       bookRating = 0;
       console.log('bookRating set to zero: ', bookRating);
     }
-
     // push bookrating in original order
     originalRatingsOrder.push(bookRating);
     console.log('originalRatingsOrder: ', originalRatingsOrder);
-
   }
 
   // sort books by rating
@@ -588,12 +651,12 @@ $("#search-button").on("click", function (event) {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     //Tyler's code here... for dynamic images
     //This uses google API to get book thumbnail images and titles. See the function populateBooks().
-    $.ajaxPrefilter(function (options) {
-      if (options.crossDomain && jQuery.support.cors) {
-        var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
-        options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
-      }
-    });
+    // $.ajaxPrefilter(function (options) {
+    //   if (options.crossDomain && jQuery.support.cors) {
+    //     var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+    //     options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+    //   }
+    // });
     var authorSearch = searchByAuthor;
     var titleSearch = searchByBook;
     var searchURL = "https://www.googleapis.com/books/v1/volumes?q=" + titleSearch + "+inauthor:" + authorSearch + "&key=AIzaSyAYJ5-dMTGiI5M6BoZ2WEGoJSM-D8GEH7k";
@@ -610,7 +673,7 @@ $("#search-button").on("click", function (event) {
   }
   searchByAuthor = '';
   searchByBook = '';
-  
+
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

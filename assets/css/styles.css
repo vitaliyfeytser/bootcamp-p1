@@ -1,5 +1,5 @@
 body {
-    background-color:rgb(241,195,148);
+    background-color:snow;
     /* background-color:rgb(241, 221, 201); */
     /*
     --SAME COLOR IN DIFFERENT NOTATIONS --
@@ -11,10 +11,30 @@ body {
     */
 }
 
+.navbar {
+    /* z-index: 90; */
+    box-shadow: 0 0 .5em 0 black;
+    transition: 0.3s;
+}
+
+/* #exampleModal {
+z-index: 10;
+} */
+
 #sign-in-modal {
     background: none;
     /* box-shadow: none; */
     border: none;
+}
+
+.firebaseui-auth-container {
+    z-index: 100;
+}
+
+.carousel {
+    /* position: absolute; */
+    /* z-index: 1; */
+    width: 100%;
 }
 
 .carousel-inner {
@@ -24,17 +44,19 @@ body {
 
 .wide-author-container {
     position: absolute;
+    z-index: 1;
     width: 100%;
-    top: 12vw;
-    padding-left: 15vw;
-    padding-right: 15vw;
+    /* top: 12vw; */
+    /* padding-left: 15vw;
+    padding-right: 15vw; */
+    padding-top: 7.5vw;
+    padding-bottom: 10vw;
 }
 
 
 
 .author-img {
     height: 18vw;
-
     box-shadow: 
     -.05em -.05em 2.5em rgb(27, 27, 27),
     -.05em .05em 2.5em rgb(27, 27, 27),
@@ -42,61 +64,58 @@ body {
     0 -.075em 2.5em rgb(27, 27, 27);
 }
 
-#today-top {
+.today-top {
     color: black;
     font-size: 2vw;
+    line-height: 2vw;
+    font-weight: bold;
+    margin: 0.25em;
+    padding: 0;
     text-shadow: 
     -.05em -.05em 2.5em white,
-    .05em -.05em 2.5em white,
     -.05em .05em 2.5em white,
-    .05em .05em 2.5em white,
     -.075em 0 2.5em white,
-    .075em 0 2.5em white,
-    0 -.075em 2.5em white,
-    0 .075em 2.5em white;
+    0 -.075em 2.5em white;
 }
 
 #author-name {
-    color: white;
     font-size: 3vw;
+    color: white;
+    margin: 0;
+    padding: 0;
     text-shadow: 
     -.05em -.05em 2.5em rgb(27, 27, 27),
-    .05em -.05em 2.5em rgb(27, 27, 27),
     -.05em .05em 2.5em rgb(27, 27, 27),
-    .05em .05em 2.5em rgb(27, 27, 27),
     -.075em 0 2.5em rgb(27, 27, 27),
-    .075em 0 2.5em rgb(27, 27, 27),
-    0 -.075em 2.5em rgb(27, 27, 27),
-    0 .075em 2.5em rgb(27, 27, 27);
+    0 -.075em 2.5em rgb(27, 27, 27);
+
 }
 
 
 .author-bio {
     color: white;
-    font-size: 1.25vw;
+    font-size: 1.5vw;
+    margin: 0;
+    padding: 0;
+
     text-shadow: 
-    -.05em -.05em 1.5em rgb(27, 27, 27),
-    .05em -.05em 1.5em rgb(27, 27, 27),
-    -.05em .05em 1.5em rgb(27, 27, 27),
-    .05em .05em 1.5em rgb(27, 27, 27),
-    -.075em 0 1.5em rgb(27, 27, 27),
-    .075em 0 1.5em rgb(27, 27, 27),
-    0 -.075em 1.5em rgb(27, 27, 27),
-    0 .075em 1.5em rgb(27, 27, 27);
+    -.05em -.05em 2.5em rgb(27, 27, 27),
+    -.05em .05em 2.5em rgb(27, 27, 27),
+    -.075em 0 2.5em rgb(27, 27, 27),
+    0 -.075em 2.5em rgb(27, 27, 27);
+    
+    /* overflow-y: scroll; */
 }
 
 #wikipedia-credit {
+    /* margin: .1vw; */
     text-decoration: none;
     font-size: 1.25vw;
     text-shadow: 
-    -.05em -.05em 1.5em rgb(27, 27, 27),
-    .05em -.05em 1.5em rgb(27, 27, 27),
-    -.05em .05em 1.5em rgb(27, 27, 27),
-    .05em .05em 1.5em rgb(27, 27, 27),
-    -.075em 0 1.5em rgb(27, 27, 27),
-    .075em 0 1.5em rgb(27, 27, 27),
-    0 -.075em 1.5em rgb(27, 27, 27),
-    0 .075em 1.5em rgb(27, 27, 27);
+    -.05em -.05em 2.5em rgb(27, 27, 27),
+    -.05em .05em 2.5em rgb(27, 27, 27),
+    -.075em 0 2.5em rgb(27, 27, 27),
+    0 -.075em 2.5em rgb(27, 27, 27);
 }
 
 
@@ -124,6 +143,7 @@ body {
     font-weight: bold;
 }
 
+
 .book-image {
     cursor: pointer;
     height: 18vw;
@@ -136,15 +156,60 @@ body {
 .book-image:hover {
     box-shadow: 0 .5em 1.5em 0 black;
 }
+
+.popular-books {
+    overflow-x: scroll;
+}
+
+.book-row {
+    display: flex;
+    flex-flow: wrap-reverse;
+    margin-left: -1em;
+}
+
+.book-buttons{
+    margin: 0em;
+}
+
+.favorite-button {
+    height: 1.5vw;
+    /* width: 2em; */
+    margin: 0.25em;
+    opacity: 0.5;
+    /* filter: alpha(opacity=50); */
+}
+.favorite-button:hover {
+    opacity: 1;
+}
+.favorite-button-spotlight {
+    /* display: none; */
+}
+
+.eBook-image {
+    height: 1.5vw;
+    margin: 0.25em;
+    opacity: 0.5;
+    /* filter: alpha(opacity=50); */
+}
+
+.eBook-image:hover {
+    opacity: 1;
+}
+.eBook-image-spotlight {
+    /* display: none; */
+}
+
 .book-title {
-    margin-top: .5em;
+    margin-top: .05em;
+    font-weight: bold;
 }
 
 
 /* COMPLETE WORKS TABLE */
 
+
 #google-books-logo {
-    height: 1.5vw;
+    height: 1em;
 }
 
 #google-credit {
@@ -156,6 +221,42 @@ body {
     margin: 1em 0em;
     font-weight: bold;
 }
+
+/* -------------------------------------- */
+
+#all-tables{
+    justify-content: space-between;
+}
+#table-set-1-column {
+    padding: 0;
+}
+
+#table-set-1-row {
+    justify-content: space-between;
+    flex-direction: row-reverse; 
+    
+}
+#table-set-2-column {
+    padding: 0;
+}
+
+/* #found-books-table {
+    align-self: flex-start;
+} */
+
+#table-set-1-inner-row {
+    flex-flow: row wrap;
+}
+#table-set-2-inner-row {
+    flex-flow: row wrap;
+}
+
+
+/* #table-set-2-column {
+    align-self: auto; */
+    /* justify-content: flex-start; */
+    /* flex-direction: row-reverse; */
+/* } */
 
 .side-table {
     background-color: whitesmoke;
@@ -171,21 +272,186 @@ body {
 } */
 
 .table-rating-image {
-    width: 5vw;
+    width: 6vw;
 }
 
-#eBook-image {
-    height: 2vw;
-    /* width: 2em; */
-    margin: .5em;
-    /* opacity: 0.5;
-    filter: alpha(opacity=50); */
+.footer {
+    justify-content: center;
+    text-align: center;
 }
 
-.favorite-button {
-    height: 2vw;
-    /* width: 2em; */
-    margin: .5em;
-    /* opacity: 0.5;
-    filter: alpha(opacity=50); */
+/* ----------------- MEDIA QUERIES ----------------- */
+
+
+/* ------ LOWER TABLES ---------- */
+/* #table-set-1-inner-row {
+    flex-flow: row wrap;
+}
+#table-set-2-inner-row {
+    flex-flow: row wrap;
+} */
+
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+
+    .wide-author-container {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        /* top: 12vw; */
+        /* padding-left: 15vw;
+        padding-right: 15vw; */
+        padding-top: 1.5vw;
+        padding-bottom: 7vw;
+    }
+    
+    .author-box {
+        padding-left: 0;
+    }
+
+    #col-author-image {
+        padding: 2vw 2vw 0 0;
+    }
+    
+    .author-img {
+        height: 25vw;
+        box-shadow: 
+        -.05em -.05em .5em rgb(27, 27, 27),
+        -.05em .05em .5em rgb(27, 27, 27),
+        -.075em 0 .5em rgb(27, 27, 27),
+        0 -.075em .5em rgb(27, 27, 27);
+    }
+    
+    .today-top {
+        display: none;
+    }
+    
+    #author-name {
+        font-size: 6vw;
+        color: white;
+        margin: 0;
+        padding: 0;
+        text-shadow: 
+        -.05em -.05em 2.5em rgb(27, 27, 27),
+        -.05em .05em 2.5em rgb(27, 27, 27),
+        -.075em 0 2.5em rgb(27, 27, 27),
+        0 -.075em 2.5em rgb(27, 27, 27);
+    
+    }
+    
+    
+    .author-bio {
+        color: white;
+        font-size: 3.25vw;
+        margin: 0;
+        padding: 0;
+        height: 20vw;
+        text-shadow: 
+        -.05em -.05em .5em rgb(27, 27, 27),
+        -.05em .05em .5em rgb(27, 27, 27);
+
+        overflow-y: scroll;
+    }
+    
+    #wikipedia-credit {
+        margin: 0;
+        text-decoration: none;
+
+    }
+    
+    
+    #wikipedia-logo {
+        padding: 0;
+        margin: 0;
+        height: 3vw;
+    }
+    
+    #by-wikipedia {
+        line-height: 1vw;
+        font-size: 2.25vw;
+        text-shadow: 
+        -.05em -.05em 2.5em rgb(27, 27, 27),
+        -.05em .05em 2.5em rgb(27, 27, 27),
+        -.075em 0 2.5em rgb(27, 27, 27),
+        0 -.075em 2.5em rgb(27, 27, 27);
+    }
+
+    .table-rating-image {
+        width: 15vw;
+    }
+
+    .table-book-image {
+        height: 15vw;
+    }
+
+    .date-published-column {
+        display: none;
+    }
+
+
+    #popular-title {
+        margin: 1em 0em;
+        font-weight: bold;
+    }
+
+    .book-image {
+        cursor: pointer;
+        height: 30vw;
+        /* Add shadows to create a 3D effect */
+        box-shadow: 0 .1em .25em 0 black;
+        transition: 0.3s;
+    }
+
+    /* On mouse-over, add a deeper shadow */
+    .book-image:hover, .book-image:active {
+        box-shadow: 0 .5em 1.5em 0 black;
+    }
+
+    .popular-books {
+        overflow-x: scroll;
+    }
+
+    .book-row {
+        display: flex;
+        flex-flow: wrap-reverse;
+        /* margin-left: -1em; */
+    }
+
+    .book-buttons{
+        margin: 0;
+
+    }
+
+    .favorite-button {
+        height: 3.5vw;
+        /* width: 2em; */
+        margin: 0vw .5vw 0vw .5vw;
+        /* opacity: 0.5;
+        filter: alpha(opacity=50); */
+    }
+
+    .favorite-button-spotlight {
+        display: none;
+    }
+    .eBook-image {
+        height: 3.5vw;
+        margin: 0vw .5vw 3vw .5vw;
+        opacity: 0.5;
+        /* filter: alpha(opacity=50); */
+    }
+    .eBook-image-spotlight {
+        display: none;
+    }
+    .book-title {
+        display: none;
+        /* margin-top: 1vw; */
+        font-weight: normal;
+        font-size: 3vw;
+    }
+
 }
