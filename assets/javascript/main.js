@@ -208,11 +208,21 @@ var authors = [
 //First, it loads the intial "author spotlight", by randomly selecting an author from the author object above
 
 // var authorSpotlightNumber = Math.floor(Math.random() * authors.length);
-var authorNumber = Math.floor(Math.random() * authors.length);
+var authorNumber = '';
+
+var chooseAuthor = Math.floor(Math.random() * authors.length);
+// this statement prevents sequentially repeating author spotlight
+if (authorNumber === chooseAuthor) {
+  authorNumber = chooseAuthor + 1;
+} else {
+  authorNumber = chooseAuthor;
+}
+
+
 var authorSpotlight = authors[authorNumber].fullName;
 
 function topAuthor() {
-  authorNumber = Math.floor(Math.random() * authors.length);
+  // authorNumber = Math.floor(Math.random() * authors.length);
   authorSpotlight = authors[authorNumber].fullName;
 
   // $.ajaxPrefilter(function (options) {
